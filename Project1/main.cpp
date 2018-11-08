@@ -12,7 +12,7 @@ void MyFunc(char c)
 
 void MyFunc(int a, int b)
 {
-	std::cout << "void MyFunc( " << a << b << " ) called" << std::endl;
+	std::cout << "void MyFunc( " << a << ", " << b << " ) called" << std::endl;
 }
 
 int main(void)

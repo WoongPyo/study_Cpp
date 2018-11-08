@@ -34,6 +34,7 @@ int main(void)
 {
 	std::cout << "true : " << true << std::endl;
 	std::cout << "false : " << false << std::endl;
+	std::cout << "size of true false : " << sizeof(true) << std::endl;
 
 	/*
 	AAA::BBB::CCC::num1 = 20;

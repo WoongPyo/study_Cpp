@@ -1,24 +1,15 @@
 #include <iostream>
 
-void MyFunc(void)
+int Adder(int num1 = 1, int num2 = 2)
 {
-	std::cout << "Myfunc(void) called" << std::endl;
-}
-
-void MyFunc(char c)
-{
-	std::cout << "void MyFunc( " << c << " ) called" << std::endl;
-}
-
-void MyFunc(int a, int b)
-{
-	std::cout << "void MyFunc( " << a << ", " << b << " ) called" << std::endl;
+	return num1 + num2;
 }
 
 int main(void)
 {
-	MyFunc();
-	MyFunc('A');
-	MyFunc(12, 13);
+	std::cout << Adder() << std::endl;
+	std::cout << Adder(5) << std::endl;
+	std::cout << Adder(3,5) << std::endl;
+
 	return 0;
 }

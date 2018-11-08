@@ -1,6 +1,6 @@
 #include <iostream>
 
-namespace BestSomImpl {
+namespace BestComImpl {
 	void SimpleFunc(void);
 }
 
@@ -10,13 +10,14 @@ namespace ProgComImpl {
 
 int main(void)
 {
-	BestSomImpl::SimpleFunc();
+	using BestComImpl::SimpleFunc;
+	SimpleFunc();
 	ProgComImpl::SimpleFunc();
 
 	return 0;
 }
 
-void BestSomImpl::SimpleFunc(void)
+void BestComImpl::SimpleFunc(void)
 {
 	std::cout << "BestComÀÇ ÇÔ¼ö." << std::endl;
 }

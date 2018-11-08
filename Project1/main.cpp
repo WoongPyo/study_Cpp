@@ -32,8 +32,8 @@ namespace ProgComImpl {
 
 int main(void)
 {
-	std::cout << SQUARE(5) << std::endl;
-	std::cout << SQUARE(5.5) << std::endl;
+	std::cout << "true : " << true << std::endl;
+	std::cout << "false : " << false << std::endl;
 
 	/*
 	AAA::BBB::CCC::num1 = 20;

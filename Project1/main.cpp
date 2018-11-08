@@ -1,59 +1,19 @@
 #include <iostream>
 #include <cstring>
 
-//#define SQUARE(x) ((x)*(x))
-
-template <typename T> 
-
-inline T SQUARE(T x)
+char *MakeStrAdr(int len)
 {
-	return x * x;
-}
-
-namespace AAA
-{
-	namespace BBB
-	{
-		namespace CCC
-		{
-			int num1;
-			int num2;
-		}
-	}
-}
-
-namespace BestComImpl {
-	void SimpleFunc(void);
-}
-
-namespace ProgComImpl {
-	void SimpleFunc(void);
+	//char *str = (char *)malloc(sizeof(char) * len);
+	char *str = new char[len];
+	return str;
 }
 
 int main(void)
 {
-	std::cout << "true : " << true << std::endl;
-	std::cout << "false : " << false << std::endl;
-	std::cout << "size of true false : " << sizeof(true) << std::endl;
-
-	/*
-	AAA::BBB::CCC::num1 = 20;
-	AAA::BBB::CCC::num2 = 30;
-
-	using 
-	using BestComImpl::SimpleFunc;
-	SimpleFunc();
-	ProgComImpl::SimpleFunc();
-	*/
+	char *str = MakeStrAdr(30);
+	strcpy_s(str, 30, "I am happy~.");
+	std::cout << str << std::endl;
+	//free(str);
+	delete(str);
 	return 0;
-}
-
-void BestComImpl::SimpleFunc(void)
-{
-	std::cout << "BestCom의 함수." << std::endl;
-}
-
-void ProgComImpl::SimpleFunc(void)
-{
-	std::cout << "ProgCom의 함수." << std::endl;
 }

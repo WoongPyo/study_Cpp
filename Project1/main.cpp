@@ -2,40 +2,70 @@
 
 using namespace std;
 
-void SwapByRef(int &ref1, int &ref2)
-{
-	int temp = ref1;
-	ref1 = ref2;
-	ref2 = temp;
-}
 
-int &RefRetFuncOne(int &ref)
+/*자동차 (소유자, 연료량, 현재속도)*/
+#define ID_LEN		20
+#define MAX_SPD		200
+#define FUEL_STEP	2
+#define ACC_STEP	10
+#define BRK_STEP	10
+
+struct Car
 {
-	ref++;
-	return ref;
-}
+	char gamerID[ID_LEN];
+	int fuelGauge;
+	int curSpeed;
+
+	void ShowCarState()
+	{
+		cout << "소유자 : " << gamerID << endl;
+		cout << "연료량 : " << fuelGauge << endl;
+		cout << "속  도 : " << curSpeed << endl;
+	}
+
+	void Accel()
+	{
+		//연료량 체크
+		if (fuelGauge <= 0)
+			return;
+		else
+			fuelGauge -= FUEL_STEP;
+
+		//최고 속도 체크
+		if (curSpeed + ACC_STEP >= MAX_SPD)
+		{
+			curSpeed = MAX_SPD;
+			return;
+		}
+		curSpeed += ACC_STEP;
+	}
+
+	void Break()
+	{
+		if (curSpeed < BRK_STEP)
+		{
+			curSpeed = 0;
+			return;
+		}
+		curSpeed -= BRK_STEP;
+
+	}
+};
+
 
 int main(void)
 {
-	// 반환형이 참조자인 경우.
-	int num2 = 1;
-	int &num3 = RefRetFuncOne(num2); // int &num3 = num2;
-	num2++;
-	num3++;
+	Car run77 = { "run77", 100 , 0 };
+	run77.Accel();
+	run77.Accel();
+	run77.ShowCarState();
+	run77.Break();
+	run77.ShowCarState();
+	
+	Car run88 = { "run88", 100, 0 };
+	run88.Accel();
+	run88.Break();
+	run88.ShowCarState();
 
-	cout << "num2  : " << num2 << endl;
-	cout << "num3  : " << num3 << endl;
-
-
-	// 참조자를 이용한 call by reference
-	/*
-	int val2 = 10;
-	int val3 = 20;
-
-	SwapByRef(val2, val3);
-
-	cout << "val2 : " << val2 << endl;
-	cout << "val3 : " << val3 << endl;
-	*/
 	return 0;
 }

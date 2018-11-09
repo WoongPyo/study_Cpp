@@ -1,5 +1,3 @@
-#include <iostream>
-#include <cstring>
 #include "car.h"
 
 int main(void)

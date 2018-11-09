@@ -11,7 +11,7 @@ void Car::ShowCarState()
 {
 	cout << "소유자 : " << gamerID << endl;
 	cout << "연료량 : " << fuelGauge << endl;
-	cout << "속  도 : " << curSpeed << endl;
+	cout << "속  도 : " << curSpeed << endl << endl;
 }
 
 void Car::Accel()

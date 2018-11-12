@@ -19,6 +19,7 @@ class FruitSeller
 	// 판매 수익금
 	int myMoney;
 
+public:
 	/* 함수 */
 	// 멤버변수 초기화 -> 생성자
 	FruitSeller(int price, int num, int money)
@@ -52,31 +53,40 @@ class FruitBuyer
 	// 구입사과수량
 	int numOfApples;
 
+public:
 	/*함수*/
 	// 멤버변수 초기화
-	FruitBuyer(int money, int numOfApple)
+	FruitBuyer(int money)
 	{
 		myMoney = money;
-		numOfApples = numOfApple;
+		numOfApples = 0;
 	}
 	// 사과 구매함수
-	void Buy(int money)
+	void BuyApples(FruitSeller &seller, int money)
 	{
 		myMoney -= money;
+		numOfApples += seller.SalesApples(money);
 	}
 
 	// 현재상태 출력 함수
-	void ShowBuyerResult()
+	void ShowBuyResult()
 	{
 		cout << "사과 개수 : " << numOfApples << endl;
-		cout << "잔액 : " << myMoney << endl;
+		cout << "현재 잔액 : " << myMoney << endl;
 	}
 };
 
 int main(void)
 {
-	FruitSeller seller = { 100, 100, 0 };
-	FruitBuyer buyer = { 1000, 0 };
+	FruitSeller seller(100, 100, 0);
+	FruitBuyer buyer(1000);
 
+	//사과 판매 및 구매 거래
+	buyer.BuyApples(seller, 500);
+
+	cout << "과일 판매자의 현황" << endl;
+	seller.ShowSalesResult();
+	cout << "과일 구매자의 현황" << endl;
+	buyer.ShowBuyResult();
 	return 0;
 }

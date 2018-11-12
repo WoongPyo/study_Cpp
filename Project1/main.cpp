@@ -75,8 +75,8 @@ class FruitBuyer
 
 int main(void)
 {
-	FruitSeller seller(100,100,0);
-	FruitBuyer buyer(1000,0);
+	FruitSeller seller = { 100, 100, 0 };
+	FruitBuyer buyer = { 1000, 0 };
 
 	return 0;
 }

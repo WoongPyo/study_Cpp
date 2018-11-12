@@ -12,6 +12,7 @@ using namespace std;
 
 class FruitSeller
 {
+private:
 	// 사과의 판매단가
 	// int applePrice;
 	const int APPLE_PRICE;
@@ -60,12 +61,14 @@ public:
 
 class FruitBuyer
 {
+private:
 	// 구입후 잔액
 	int myMoney;
 	// 구입사과수량
 	int numOfApples;
 
 public:
+	// int myMoney;
 	/*함수*/
 	// 멤버변수 초기화
 	// member initialize를 사용해 멤버를 초기화
@@ -81,6 +84,11 @@ public:
 	{
 		myMoney -= money;
 		numOfApples += seller.SalesApples(money);
+	}
+
+	void GetMoney(int money)
+	{
+		myMoney += money;
 	}
 
 	// 현재상태 출력 함수
@@ -99,7 +107,7 @@ int main(void)
 	FruitBuyer buyer(1000);
 
 	//사과 판매 및 구매 거래
-	buyer.BuyApples(seller, 500);
+	buyer.BuyApples(seller, 570);
 
 	cout << "과일 판매자의 현황" << endl;
 	seller.ShowSalesResult();

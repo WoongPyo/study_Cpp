@@ -50,8 +50,35 @@ public:
 int main(void)
 {
 	/*객체 포인터 배열*/
+	Person *personParr[3];
+	char namestr[100];
+	char *strptr;
+	int age;
+	int len;
 
-	/*객체배열*/
+	for (int i = 0; i < 3; i++)
+	{
+		cout << "이름 : ";
+		cin >> namestr;
+		cout << "나이 : ";
+		cin >> age;
+
+		len = strlen(namestr) + 1;
+		strptr = new char[len];
+		strcpy(strptr, namestr);
+		personParr[i] = new Person(strptr, age);
+		cout << endl;
+	}
+	personParr[0]->ShowPersonInfo();
+	personParr[1]->ShowPersonInfo();
+	personParr[2]->ShowPersonInfo();
+
+	delete personParr[0];
+	delete personParr[1];
+	delete personParr[2];
+
+
+	/*
 	Person personArr[3];
 	char namestr[100];
 	char *strptr;
@@ -74,6 +101,6 @@ int main(void)
 	personArr[0].ShowPersonInfo();
 	personArr[1].ShowPersonInfo();
 	personArr[2].ShowPersonInfo();
-
+	*/
 	return 0;
 }

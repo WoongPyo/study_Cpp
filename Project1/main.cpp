@@ -68,10 +68,12 @@ class FruitBuyer
 public:
 	/*함수*/
 	// 멤버변수 초기화
-	FruitBuyer(int money)
+	FruitBuyer(int money) : myMoney(money), numOfApples(0)
 	{
+		/*
 		myMoney = money;
 		numOfApples = 0;
+		*/
 	}
 	// 사과 구매함수
 	void BuyApples(FruitSeller &seller, int money)

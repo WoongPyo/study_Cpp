@@ -47,10 +47,10 @@ public:
 	}
 };
 
-/*객체 포인터 배열*/
-
 int main(void)
 {
+	/*객체 포인터 배열*/
+
 	/*객체배열*/
 	Person personArr[3];
 	char namestr[100];

@@ -68,6 +68,7 @@ class FruitBuyer
 public:
 	/*함수*/
 	// 멤버변수 초기화
+	// member initialize를 사용해 멤버를 초기화
 	FruitBuyer(int money) : myMoney(money), numOfApples(0)
 	{
 		/*

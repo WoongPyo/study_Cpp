@@ -2,73 +2,40 @@
 
 using namespace std;
 
-/*캡슐화 - 범위 (감기환자, 감기약) */
-//콧물약 캡슐
-class SinivelCap
+class Person
 {
+private : 
+	char *name = {};
+	int age;
 public:
-	void Take() { cout << "콧물이 멎습니다." << endl; }
-};
-
-//기침약 캡슐
-class SneezeCap
-{
-public:
-	void Take() { cout << "재채기가 멎습니다." << endl; }
-};
-
-//코막힘약 캡슐
-class SunffleCap
-{
-public:
-	void Take() { cout << "코막힘이 뚫립니다." << endl; }
-};
-
-class AllInOne : SinivelCap, SneezeCap, SunffleCap
-{
-public:
-	void Take() {};
-};
-
-//감기환자
-class ColdPatient
-{
-public:
-	//콧물 감기약 복용 함수
-	void TakeSinivelCap(SinivelCap &cap)
+	//constructor
+	Person(const char *myName, int myAge)
 	{
-		cap.Take();
+		int len = strlen(myName) + 1;
+		name = new char[len];
+		strcpy(name, myName);
+		age = myAge;
+	}
+	void ShowPersonInfo() const
+	{
+		cout << "이름 : " << name << endl;
+		cout << "나이 : " << age << endl;
 	}
 
-	//기침약 복용 함수
-	void TakeSneezeCap(SneezeCap &cap)
+	//destructor
+	~Person()
 	{
-		cap.Take();
-	}
-
-	//코막힘약 복용 함수
-	void TakeSunffleCap(SunffleCap &cap)
-	{
-		cap.Take();
-	}
-
-	void Takeall(AllInOne)
-	{
-
+		delete[] name;
 	}
 };
 
 int main(void)
 {
-	SinivelCap scap;
-	SneezeCap zcap;
-	SunffleCap ncap;
+	Person man1("이동우", 25);
+	Person man2("홍길동", 29);
 
-	ColdPatient patient;
-
-	patient.TakeSinivelCap(scap);
-	patient.TakeSneezeCap(zcap);
-	patient.TakeSunffleCap(ncap);
+	man1.ShowPersonInfo();
+	man2.ShowPersonInfo();
 
 	return 0;
 }

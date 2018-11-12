@@ -84,8 +84,10 @@ public:
 	}
 
 	// 현재상태 출력 함수
-	void ShowBuyResult()
+	void ShowBuyResult() const
 	{
+		// numOfApples = 1000;
+		// 출력함수의 경우 함수 뒤에 const를 붙여 함수를 상수화 시킴, 내부 멤버 변수를 바꿀수 없게 할 수 있음.
 		cout << "사과 개수 : " << numOfApples << endl;
 		cout << "현재 잔액 : " << myMoney << endl;
 	}

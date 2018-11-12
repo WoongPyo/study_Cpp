@@ -13,7 +13,8 @@ using namespace std;
 class FruitSeller
 {
 	// 사과의 판매단가
-	int applePrice;
+	// int applePrice;
+	const int APPLE_PRICE;
 	// 사과의 재고수량
 	int numOfApples;
 	// 판매 수익금
@@ -22,17 +23,28 @@ class FruitSeller
 public:
 	/* 함수 */
 	// 멤버변수 초기화 -> 생성자
-	FruitSeller(int price, int num, int money)
+	FruitSeller(int price, int num, int money): APPLE_PRICE(price)
 	{
-		applePrice = price;
+		//APPLE_PRICE = price;
 		numOfApples = num;
 		myMoney = money;
+		
 	}
-	
+	/*
+	FruitSeller(int price, int num, int money) : APPLE_PRICE(price), numOfApples(num), myMoney(money)
+	{
+		
+		APPLE_PRICE = price;
+		numOfApples = num;
+		myMoney = money;
+		
+	}
+	*/
+
 	// 사과 판매 함수
 	int SalesApples(int money)
 	{
-		int num = money / applePrice;
+		int num = money / APPLE_PRICE;
 		numOfApples -= num;
 		myMoney += money;
 		return num;

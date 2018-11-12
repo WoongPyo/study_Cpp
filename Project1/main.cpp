@@ -26,6 +26,7 @@ public:
 	~Person()
 	{
 		delete[] name;
+		cout << "called destructor!!" << endl;
 	}
 };
 
@@ -36,6 +37,7 @@ int main(void)
 
 	man1.ShowPersonInfo();
 	man2.ShowPersonInfo();
+
 
 	return 0;
 }

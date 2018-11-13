@@ -4,7 +4,7 @@
 using namespace std;
 
 #define N_ACCOUNT	100
-#define NO_MATCH	101
+#define NO_MATCH	N_ACCOUNT+1
 
 class Account {
 private:
@@ -38,20 +38,7 @@ public:
 
 class Print {
 public :
-	int GetSomting2Int(const char *inputStr)
-	{
-		int buf;
-		cout << inputStr;
-		cin >> buf;
-		return buf;
-	}
-	char *GetSomting2Str(const char *inputStr)
-	{
-		char *buf;
-		cout << inputStr;
-		cin >> buf;
-		return buf;
-	}
+	int GetSomting2Int(const char *inputStr);
 };
 
 int main(void)
@@ -61,9 +48,8 @@ int main(void)
 	Print print;
 	int sel;
 	int result;
-	char *name = new char[30];
-	int money;
-	bool availableFlag;
+	char *namebuf = new char[30];
+	int moneybuf;
 
 	int closeFlag = 0;
 	int idNum;
@@ -82,9 +68,10 @@ int main(void)
 
 			if (check.CheckingID(idNum, check.GetAccountNumber()) == NO_MATCH)
 			{
-				name = print.GetSomting2Str("이름		: ");
-				money = print.GetSomting2Int("입금액		: ");
-				accounts[check.GetAccountNumber()] = new Account(idNum, money, name);
+				cout << "이름		: ";
+				cin >> namebuf;
+				moneybuf = print.GetSomting2Int("입금액		: ");
+				accounts[check.GetAccountNumber()] = new Account(idNum, moneybuf, namebuf);
 				check.SetAccountNumber();
 			}
 			else
@@ -103,8 +90,8 @@ int main(void)
 			}
 			else
 			{
-				money = print.GetSomting2Int("입금액		: ");
-				accounts[result]->InputMoney(money);
+				moneybuf = print.GetSomting2Int("입금액		: ");
+				accounts[result]->InputMoney(moneybuf);
 				cout << "입금완료 되었습니다." << endl << endl;
 			}
 			break;
@@ -119,9 +106,8 @@ int main(void)
 			}
 			else
 			{
-				money = print.GetSomting2Int("출금액		: ");
-				availableFlag = accounts[result]->OutputMoney(money);
-				if (availableFlag)
+				moneybuf = print.GetSomting2Int("출금액		: ");
+				if (accounts[result]->OutputMoney(moneybuf))
 				{
 					std::cout << "출금완료 되었습니다." << std::endl << std::endl;
 				}
@@ -139,16 +125,12 @@ int main(void)
 		case 5:
 			//프로그램 종료
 			closeFlag = 1;
-			delete[] name;
-			delete accounts[]
+			delete[] namebuf;
 			break;
 		}
 		if (closeFlag)		break;
 	}
-
-
-	//프로그램 종료
-
+	return 0;
 }
 
 
@@ -185,9 +167,9 @@ bool Account::OutputMoney(int outputMoney)
 }
 void Account::PrintAccount()
 {
-	std::cout << "계좌 ID		: " << account_id << endl;
-	std::cout << "이름		: " << name << endl;
-	std::cout << "입금액		: " << money << endl << endl;
+	std::cout << "계좌 ID		: "	<< account_id << endl;
+	std::cout << "이름		: "		<< name << endl;
+	std::cout << "입금액		: "		<< money << endl << endl;
 }
 
 
@@ -229,10 +211,18 @@ void Checking::PrintAccounts()
 
 void Checking::PrintSelect(void)
 {
-	std::cout << "--------Menu--------" << std::endl;
-	std::cout << "1. 계좌개설" << std::endl;
-	std::cout << "2. 입금" << std::endl;
-	std::cout << "3. 출금" << std::endl;
-	std::cout << "4. 계좌정보 전체 출력" << std::endl;
-	std::cout << "5. 프로그램 종료" << std::endl << std::endl;
+	cout << "--------Menu--------" << endl;
+	cout << "1. 계좌개설" << endl;
+	cout << "2. 입금" << endl;
+	cout << "3. 출금" << endl;
+	cout << "4. 계좌정보 전체 출력" << endl;
+	cout << "5. 프로그램 종료" << endl << endl;
+}
+
+int Print::GetSomting2Int(const char *inputStr)
+{
+	int buf;
+	cout << inputStr;
+	cin >> buf;
+	return buf;
 }

@@ -1,34 +1,25 @@
 #include <iostream>
 #include <cstring>
 
-#define N_ACCOUNT	100
-#define NO_MATCH	101
-
 using namespace std;
 
+#define N_ACCOUNT	100
+#define NO_MATCH	101
 
 class Account {
 private:
 	int account_id;
 	int money;
-	char name[30];
+	char *name;
 
 public : 
-	Account(int ID, int money, char* name) : account_id(ID), money(money)
-	{
-		strcpy()
-		this->name = name;
-	}
-	int ShowID()
-	{
-		return account_id;
-	}
+	Account(int ID, int money, char* name);
+	~Account();
+	int PutID();
+	void InputMoney(int inputMoney);
+	bool OutputMoney(int outputMoney);
+	void PrintAccount();
 
-	void PrintSelect(void);
-	void MakeAccounts(int inNum);
-	void InputMoney();
-	void OutputMoney();
-	void PrintAccounts(int accountNum);
 };
 
 class Checking {
@@ -36,42 +27,31 @@ private:
 	Account **accounts;
 
 public:
-	Checking(Account **firAccountAdr)
-	{
-		accounts = firAccountAdr;
-	}
-
-	int CheckingID(int ID)
-	{
-		int i;
-
-		for (i = 0; i < N_ACCOUNT; i++)
-		{
-			if (ID == accounts[i]->ShowID)
-			{
-				return i;
-			}
-		}
-		return NO_MATCH;
-	}
+	Checking(Account **firAccountAdr);
+	int CheckingID(int ID, int accountNumber);
+	void PrintAccounts(int accountNum);
+	void PrintSelect(void);
 };
 
 int main(void)
 {
 	Account *accounts[N_ACCOUNT];
 	Checking check(accounts);
-	int result;
-
-	int accountNumber = 0;
 	int sel;
+	int accountNumber = 0;
+	int result;
+	char *name = new char[30];
+	int money;
+	bool availableFlag;
+
 	int closeFlag = 0;
-	int checkFlag = 0;
-	int inputIDNum;
 	int idNum;
+
+	check.PrintAccounts(0);
 
 	while(1)
 	{
-		PrintSelect();
+		check.PrintSelect();
 		cout << "[선택] : " ;
 		cin >> sel;
 
@@ -83,37 +63,68 @@ int main(void)
 			cout << "[계좌 개설]" << endl;
 			cout << "계좌 ID		: ";
 			cin >> idNum;
-
-			result = check.CheckingID(idNum);
-
+			result = check.CheckingID(idNum, accountNumber);
 			if (result == NO_MATCH)
 			{
-				accounts[accountNumber]->MakeAccounts(idNum);
+				cout << "이름		: ";
+				cin >> name;
+				cout << "입금액		: ";
+				cin >> money;
+				accounts[accountNumber] = new Account(idNum, money, name);
 				accountNumber++;
 			}
-			checkFlag = 0;
+			else
+			{
+				cout << "같은 ID가 존재 합니다." << endl;
+			}
 			break;
 		case 2:
 			//입금
-			std::cout << std::endl;
-			std::cout << "[입금]" << std::endl;
-			inputIDNum = CheckingID(accounts);
-			if(inputIDNum != ERROR_NUM)
-				InputMoney(accounts + inputIDNum);
+			cout << endl << "[입금]" << endl;
+			cout << "계좌 ID		: ";
+			cin >> idNum;
+			result = check.CheckingID(idNum, accountNumber);
+			if (result == NO_MATCH)
+			{
+				cout << "같은 ID가 존재 하지 않습니다." << endl;
+			}
+			else
+			{
+				cout << "입금액		: ";
+				cin >> money;
+				accounts[result]->InputMoney(money);
+				cout << "입금완료 되었습니다." << endl << endl;
+			}
 			break;
 		case 3:
 			//출금
-			std::cout << std::endl;
-			std::cout << "[출금]" << std::endl;
-			inputIDNum = CheckingID(accounts);
-			if (inputIDNum != ERROR_NUM)
-				OutputMoney(accounts + inputIDNum);
+			cout << endl << "[출금]" << endl;
+			cout << "계좌 ID		: ";
+			cin >> idNum;
+			result = check.CheckingID(idNum, accountNumber);
+			if (result == NO_MATCH)
+			{
+				cout << "같은 ID가 존재 하지 않습니다." << endl;
+			}
+			else
+			{
+				cout << "출금액		: ";
+				cin >> money;
+				availableFlag = accounts[result]->OutputMoney(money);
+				if (availableFlag)
+				{
+					std::cout << "출금완료 되었습니다." << std::endl << std::endl;
+				}
+				else
+				{
+					cout << "출금액이 잔액보다 많습니다." << std::endl << std::endl;
+				}
+			}
 			break;
 		case 4:
 			//계좌정보출력
-			std::cout << std::endl;
-			std::cout << "[전체출력]" << std::endl;
-			PrintAccounts(accounts, accountNumber);
+			cout << endl << "[전체출력]" << endl;
+			check.PrintAccounts(accountNumber);
 			break;
 		case 5:
 			//프로그램 종료
@@ -127,7 +138,73 @@ int main(void)
 	//프로그램 종료
 
 }
-void PrintSelect(void)
+
+
+Account::Account(int ID, int money, char* name) : account_id(ID), money(money)
+{
+	int len = strlen(name) + 1;
+	this->name = new char[len];
+	strcpy(this->name, name);
+}
+Account::~Account()
+{
+	delete[] name;
+}
+
+int Account::PutID()
+{
+	return account_id;
+}
+
+void Account::InputMoney(int inputMoney)
+{
+	money += inputMoney;
+}
+
+bool Account::OutputMoney(int outputMoney)
+{
+	if ((money - outputMoney) < 0)
+		return false;
+	else
+	{
+		money -= outputMoney;
+		return true;
+	}
+}
+void Account::PrintAccount()
+{
+	std::cout << "계좌 ID		: " << account_id << endl;
+	std::cout << "이름		: " << name << endl;
+	std::cout << "입금액		: " << money << endl << endl;
+}
+
+
+Checking::Checking(Account **firAccountAdr)
+{
+	accounts = firAccountAdr;
+}
+
+int Checking::CheckingID(int ID, int accountNumber)
+{
+	for (int i = 0; i < accountNumber; i++)
+	{
+		if (ID == accounts[i]->PutID())
+		{
+			return i;
+		}
+	}
+	return NO_MATCH;
+}
+
+void Checking::PrintAccounts(int accountNum)
+{
+	for (int i = 0; i < accountNum; i++)
+	{
+		accounts[i]->PrintAccount();
+	}
+}
+
+void Checking::PrintSelect(void)
 {
 	std::cout << "--------Menu--------" << std::endl;
 	std::cout << "1. 계좌개설" << std::endl;
@@ -135,61 +212,4 @@ void PrintSelect(void)
 	std::cout << "3. 출금" << std::endl;
 	std::cout << "4. 계좌정보 전체 출력" << std::endl;
 	std::cout << "5. 프로그램 종료" << std::endl << std::endl;
-}
-
-void Account::MakeAccounts(int inNum)
-{
-	account->account_id = inNum;
-	std::cout << "이름		: "; 
-	std::cin >> account->name;
-	std::cout << "입금액		: "; 
-	std::cin >> account->money;
-	std::cout << std::endl;
-}
-
-int Account::CheckingID(Account* accounts)
-{
-	int idNum;
-	std::cout << "계좌 ID		: ";
-	std::cin >> idNum;
-	for (int i = 0; i < 100; i++)
-	{
-		if (idNum == accounts[i].account_id)
-			return i;
-	}
-	std::cout << "올바른 ID가 아닙니다." << std::endl << std::endl;
-	return ERROR_NUM;
-}
-
-void Account::InputMoney(Account* account)
-{
-	int inputMoney;
-	std::cout << "입금액		: ";
-	std::cin >> inputMoney;
-	account->money += inputMoney;
-	std::cout << "입금완료 되었습니다." << std::endl << std::endl;
-}
-
-void Account::OutputMoney(Account* account)
-{
-	int outputMoney;
-	std::cout << "출금액		: ";
-	std::cin >> outputMoney;
-	if ((account->money - outputMoney) > 0)
-	{
-		account->money -= outputMoney;
-		std::cout << "출금완료 되었습니다." << std::endl << std::endl;
-	}
-	else
-		std::cout << "출금액이 잔액보다 많습니다." << std::endl << std::endl;
-}
-
-void Account::PrintAccounts(Account* account, int accountNum)
-{
-	for(int i = 0; i < accountNum; i++)
-	{
-		std::cout << "계좌 ID		: " << (account+i)->account_id << std::endl;
-		std::cout << "이름		: " << (account+i)->name << std::endl;
-		std::cout << "입금액		: " << (account+i)->money << std::endl << std::endl;
-	}
 }

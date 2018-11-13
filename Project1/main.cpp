@@ -2,105 +2,40 @@
 
 using namespace std;
 
-class Person
+/* 
+	this pointer
+	객체 자기자신을 가리키는 용도.
+*/
+class SoSimple
 {
-private : 
-	char *name = {};
-	int age;
-
+private:
+	int num;
 public:
-	// 매개변수가 없는 constructor
-	Person()
+	SoSimple(int n) : num(n)
 	{
-		name = NULL;
-		age = 0;
-		cout << "Person() called!" << endl;
+		cout << "num = " << num << endl;
+		cout << "address = " << this << endl;
 	}
-
-	// 매개변수가 있는 constructor
-	Person(const char *myName, int myAge)
+	void ShowSimpleData()
 	{
-		int len = strlen(myName) + 1;
-		name = new char[len];
-		strcpy(name, myName);
-		age = myAge;
+		cout << num << endl;
 	}
-	//멤버변수 수정 함수
-	void SetPersonInfo(char *myName, int myAge)
+	SoSimple *GetThisPointer()
 	{
-		name = myName;
-		age = myAge;
-	}
-
-	//출력함수
-	void ShowPersonInfo() const
-	{
-		cout << "이름 : " << name << endl;
-		cout << "나이 : " << age << endl;
-	}
-
-	//destructor
-	~Person()
-	{
-		delete[] name;
-		cout << "called destructor!!" << endl;
+		return this;
 	}
 };
 
 int main(void)
 {
-	/*객체 포인터 배열*/
-	Person *personParr[3];
-	char namestr[100];
-	char *strptr;
-	int age;
-	int len;
+	SoSimple sim1(100);
+	SoSimple *ptr1 = sim1.GetThisPointer();
+	cout << ptr1 << ", ";
+	ptr1->ShowSimpleData();
 
-	for (int i = 0; i < 3; i++)
-	{
-		cout << "이름 : ";
-		cin >> namestr;
-		cout << "나이 : ";
-		cin >> age;
-
-		len = strlen(namestr) + 1;
-		strptr = new char[len];
-		strcpy(strptr, namestr);
-		personParr[i] = new Person(strptr, age);
-		cout << endl;
-	}
-	personParr[0]->ShowPersonInfo();
-	personParr[1]->ShowPersonInfo();
-	personParr[2]->ShowPersonInfo();
-
-	delete personParr[0];
-	delete personParr[1];
-	delete personParr[2];
-
-
-	/*
-	Person personArr[3];
-	char namestr[100];
-	char *strptr;
-	int age;
-	int len;
-	
-	for (int i = 0; i < 3; i++)
-	{
-		cout << "이름 : ";
-		cin >> namestr;
-		cout << "나이 : ";
-		cin >> age;
-
-		len = strlen(namestr) + 1;
-		strptr = new char[len];
-		strcpy(strptr, namestr);
-		personArr[i].SetPersonInfo(strptr, age);
-		cout << endl;
-	}
-	personArr[0].ShowPersonInfo();
-	personArr[1].ShowPersonInfo();
-	personArr[2].ShowPersonInfo();
-	*/
+	SoSimple sim2(200);
+	SoSimple *ptr2 = sim2.GetThisPointer();
+	cout << ptr2 << ", ";
+	ptr2->ShowSimpleData();
 	return 0;
 }

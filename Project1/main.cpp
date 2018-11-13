@@ -1,6 +1,9 @@
 #include <iostream>
 #include <cstring>
 
+#define N_ACCOUNT	100
+#define NO_MATCH	101
+
 using namespace std;
 
 
@@ -11,40 +14,54 @@ private:
 	char name[30];
 
 public : 
-	Account(int ID, int money, char* name)
+	Account(int ID, int money, char* name) : account_id(ID), money(money)
 	{
-
+		strcpy()
+		this->name = name;
 	}
-	int CheckingID(int ID)
+	int ShowID()
 	{
-		ID
+		return account_id;
 	}
 
 	void PrintSelect(void);
-	void MakeAccounts(Account* account, int inNum);
-	void InputMoney(Account* account);
-	void OutputMoney(Account* account);
-	void PrintAccounts(Account* account, int accountNum);
+	void MakeAccounts(int inNum);
+	void InputMoney();
+	void OutputMoney();
+	void PrintAccounts(int accountNum);
 };
 
 class Checking {
 private:
-	Account *accounts[100];
+	Account **accounts;
+
 public:
-	Checking(Account *firAccountAdr)
+	Checking(Account **firAccountAdr)
 	{
 		accounts = firAccountAdr;
 	}
 
 	int CheckingID(int ID)
 	{
-		ID
+		int i;
+
+		for (i = 0; i < N_ACCOUNT; i++)
+		{
+			if (ID == accounts[i]->ShowID)
+			{
+				return i;
+			}
+		}
+		return NO_MATCH;
 	}
 };
 
 int main(void)
 {
-	Account *accounts[100];
+	Account *accounts[N_ACCOUNT];
+	Checking check(accounts);
+	int result;
+
 	int accountNumber = 0;
 	int sel;
 	int closeFlag = 0;
@@ -57,6 +74,7 @@ int main(void)
 		PrintSelect();
 		cout << "[선택] : " ;
 		cin >> sel;
+
 		switch (sel)
 		{
 		case 1:
@@ -65,17 +83,12 @@ int main(void)
 			cout << "[계좌 개설]" << endl;
 			cout << "계좌 ID		: ";
 			cin >> idNum;
-			for (int i = 0; i < 100; i++)
+
+			result = check.CheckingID(idNum);
+
+			if (result == NO_MATCH)
 			{
-				if (idNum == accounts[i].account_id)
-				{
-					std::cout << "이미 같은 ID가 존재합니다." << std::endl;
-					checkFlag = 1;
-				}
-			}
-			if (checkFlag == 0)
-			{
-				MakeAccounts(accounts + accountNumber, idNum);
+				accounts[accountNumber]->MakeAccounts(idNum);
 				accountNumber++;
 			}
 			checkFlag = 0;
@@ -124,7 +137,7 @@ void PrintSelect(void)
 	std::cout << "5. 프로그램 종료" << std::endl << std::endl;
 }
 
-void Account::MakeAccounts(Account* account, int inNum)
+void Account::MakeAccounts(int inNum)
 {
 	account->account_id = inNum;
 	std::cout << "이름		: "; 

@@ -1,22 +1,50 @@
 #include <iostream>
 #include <cstring>
 
-typedef struct {
+using namespace std;
+
+
+class Account {
+private:
 	int account_id;
 	int money;
 	char name[30];
-}Account;
 
-void PrintSelect(void);
-void MakeAccounts(Account* account, int inNum);
-int CheckingID(Account* accounts);
-void InputMoney(Account* account);
-void OutputMoney(Account* account);
-void PrintAccounts(Account* account, int accountNum);
+public : 
+	Account(int ID, int money, char* name)
+	{
+
+	}
+	int CheckingID(int ID)
+	{
+		ID
+	}
+
+	void PrintSelect(void);
+	void MakeAccounts(Account* account, int inNum);
+	void InputMoney(Account* account);
+	void OutputMoney(Account* account);
+	void PrintAccounts(Account* account, int accountNum);
+};
+
+class Checking {
+private:
+	Account *accounts[100];
+public:
+	Checking(Account *firAccountAdr)
+	{
+		accounts = firAccountAdr;
+	}
+
+	int CheckingID(int ID)
+	{
+		ID
+	}
+};
 
 int main(void)
 {
-	Account accounts[100];
+	Account *accounts[100];
 	int accountNumber = 0;
 	int sel;
 	int closeFlag = 0;
@@ -27,16 +55,16 @@ int main(void)
 	while(1)
 	{
 		PrintSelect();
-		std::cout << "[선택] : " ;
-		std::cin >> sel;
+		cout << "[선택] : " ;
+		cin >> sel;
 		switch (sel)
 		{
 		case 1:
 			//계좌를 개설
-			std::cout << std::endl;
-			std::cout << "[계좌 개설]" << std::endl;
-			std::cout << "계좌 ID		: ";
-			std::cin >> idNum;
+			cout << endl;
+			cout << "[계좌 개설]" << endl;
+			cout << "계좌 ID		: ";
+			cin >> idNum;
 			for (int i = 0; i < 100; i++)
 			{
 				if (idNum == accounts[i].account_id)
@@ -96,7 +124,7 @@ void PrintSelect(void)
 	std::cout << "5. 프로그램 종료" << std::endl << std::endl;
 }
 
-void MakeAccounts(Account* account, int inNum)
+void Account::MakeAccounts(Account* account, int inNum)
 {
 	account->account_id = inNum;
 	std::cout << "이름		: "; 
@@ -106,7 +134,7 @@ void MakeAccounts(Account* account, int inNum)
 	std::cout << std::endl;
 }
 
-int CheckingID(Account* accounts)
+int Account::CheckingID(Account* accounts)
 {
 	int idNum;
 	std::cout << "계좌 ID		: ";
@@ -120,7 +148,7 @@ int CheckingID(Account* accounts)
 	return ERROR_NUM;
 }
 
-void InputMoney(Account* account)
+void Account::InputMoney(Account* account)
 {
 	int inputMoney;
 	std::cout << "입금액		: ";
@@ -129,7 +157,7 @@ void InputMoney(Account* account)
 	std::cout << "입금완료 되었습니다." << std::endl << std::endl;
 }
 
-void OutputMoney(Account* account)
+void Account::OutputMoney(Account* account)
 {
 	int outputMoney;
 	std::cout << "출금액		: ";
@@ -143,7 +171,7 @@ void OutputMoney(Account* account)
 		std::cout << "출금액이 잔액보다 많습니다." << std::endl << std::endl;
 }
 
-void PrintAccounts(Account* account, int accountNum)
+void Account::PrintAccounts(Account* account, int accountNum)
 {
 	for(int i = 0; i < accountNum; i++)
 	{

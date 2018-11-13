@@ -25,20 +25,41 @@ public :
 class Checking {
 private:
 	Account **accounts;
+	int accountNumber;
 
 public:
 	Checking(Account **firAccountAdr);
 	int CheckingID(int ID, int accountNumber);
-	void PrintAccounts(int accountNum);
-	void PrintSelect(void);
+	int GetAccountNumber();
+	void SetAccountNumber();
+	void PrintAccounts();
+	void PrintSelect();
+};
+
+class Print {
+public :
+	int GetSomting2Int(const char *inputStr)
+	{
+		int buf;
+		cout << inputStr;
+		cin >> buf;
+		return buf;
+	}
+	char *GetSomting2Str(const char *inputStr)
+	{
+		char *buf;
+		cout << inputStr;
+		cin >> buf;
+		return buf;
+	}
 };
 
 int main(void)
 {
 	Account *accounts[N_ACCOUNT];
 	Checking check(accounts);
+	Print print;
 	int sel;
-	int accountNumber = 0;
 	int result;
 	char *name = new char[30];
 	int money;
@@ -47,31 +68,24 @@ int main(void)
 	int closeFlag = 0;
 	int idNum;
 
-	check.PrintAccounts(0);
-
 	while(1)
 	{
 		check.PrintSelect();
-		cout << "[선택] : " ;
-		cin >> sel;
+		sel = print.GetSomting2Int("[선택] : ");
 
 		switch (sel)
 		{
 		case 1:
 			//계좌를 개설
-			cout << endl;
-			cout << "[계좌 개설]" << endl;
-			cout << "계좌 ID		: ";
-			cin >> idNum;
-			result = check.CheckingID(idNum, accountNumber);
-			if (result == NO_MATCH)
+			cout << endl << "[계좌 개설]" << endl;
+			idNum = print.GetSomting2Int("계좌 ID		: ");
+
+			if (check.CheckingID(idNum, check.GetAccountNumber()) == NO_MATCH)
 			{
-				cout << "이름		: ";
-				cin >> name;
-				cout << "입금액		: ";
-				cin >> money;
-				accounts[accountNumber] = new Account(idNum, money, name);
-				accountNumber++;
+				name = print.GetSomting2Str("이름		: ");
+				money = print.GetSomting2Int("입금액		: ");
+				accounts[check.GetAccountNumber()] = new Account(idNum, money, name);
+				check.SetAccountNumber();
 			}
 			else
 			{
@@ -81,17 +95,15 @@ int main(void)
 		case 2:
 			//입금
 			cout << endl << "[입금]" << endl;
-			cout << "계좌 ID		: ";
-			cin >> idNum;
-			result = check.CheckingID(idNum, accountNumber);
+			idNum = print.GetSomting2Int("계좌 ID		: ");
+			result = check.CheckingID(idNum, check.GetAccountNumber());
 			if (result == NO_MATCH)
 			{
 				cout << "같은 ID가 존재 하지 않습니다." << endl;
 			}
 			else
 			{
-				cout << "입금액		: ";
-				cin >> money;
+				money = print.GetSomting2Int("입금액		: ");
 				accounts[result]->InputMoney(money);
 				cout << "입금완료 되었습니다." << endl << endl;
 			}
@@ -99,17 +111,15 @@ int main(void)
 		case 3:
 			//출금
 			cout << endl << "[출금]" << endl;
-			cout << "계좌 ID		: ";
-			cin >> idNum;
-			result = check.CheckingID(idNum, accountNumber);
+			idNum = print.GetSomting2Int("계좌 ID		: ");
+			result = check.CheckingID(idNum, check.GetAccountNumber());
 			if (result == NO_MATCH)
 			{
 				cout << "같은 ID가 존재 하지 않습니다." << endl;
 			}
 			else
 			{
-				cout << "출금액		: ";
-				cin >> money;
+				money = print.GetSomting2Int("출금액		: ");
 				availableFlag = accounts[result]->OutputMoney(money);
 				if (availableFlag)
 				{
@@ -124,11 +134,13 @@ int main(void)
 		case 4:
 			//계좌정보출력
 			cout << endl << "[전체출력]" << endl;
-			check.PrintAccounts(accountNumber);
+			check.PrintAccounts();
 			break;
 		case 5:
 			//프로그램 종료
 			closeFlag = 1;
+			delete[] name;
+			delete accounts[]
 			break;
 		}
 		if (closeFlag)		break;
@@ -182,6 +194,7 @@ void Account::PrintAccount()
 Checking::Checking(Account **firAccountAdr)
 {
 	accounts = firAccountAdr;
+	accountNumber = 0;
 }
 
 int Checking::CheckingID(int ID, int accountNumber)
@@ -196,9 +209,19 @@ int Checking::CheckingID(int ID, int accountNumber)
 	return NO_MATCH;
 }
 
-void Checking::PrintAccounts(int accountNum)
+int Checking::GetAccountNumber(void)
 {
-	for (int i = 0; i < accountNum; i++)
+	return accountNumber;
+}
+
+void Checking::SetAccountNumber(void)
+{
+	accountNumber++;
+}
+
+void Checking::PrintAccounts()
+{
+	for (int i = 0; i < accountNumber; i++)
 	{
 		accounts[i]->PrintAccount();
 	}

@@ -17,55 +17,89 @@ using namespace std;
 	예시) - is A 관계 : 학생은 사람이다. Student is a person.
 */
 
-class Person
+class Gun
 {
 private:
-	char name[30];
-	int age;
+	int bullet;
 public:
-	Person(const char *myName, int myage) : age(myage)
+	Gun(int bulletNum) : bullet(bulletNum)
+	{}
+	void Shot()
 	{
-		strcpy(name, myName);
-	}
-
-	void WhatYourName() const
-	{
-		cout << "My Name is " << endl;
-	}
-
-	void HowOldAreYou() const
-	{
-		cout << "I'm " << age << " years old." << endl;
+		cout << "BANG~!" << endl;
+		bullet--;
 	}
 };
 
-class Student : public Person
+/*
+// is a 관계의 police class
+
+class Police : public Gun
 {
 private:
-	char major[50];
+	int handcuffs;
 public:
-	Student(const char *myName, int myAge, const char *myMajor) : Person(myName, myAge)
+	Police(int bulletNum, int handcuffsNum) : Gun(bulletNum), handcuffs(handcuffsNum)
+	{}
+	void PutHandcuff()
 	{
-		strcpy(major, myMajor);
-	}
-
-	void MyMajor() const
-	{
-		cout << "My major is " << major << "." << endl;
-	}
-
-	void WhoAreYou() const
-	{
-		WhatYourName();
-		HowOldAreYou();
-		MyMajor();
+		cout << "SNAP!!" << endl;
 	}
 };
+*/
+
+// has a 관계의 police class
+
+class Police
+{
+private:
+	int handcuffs;
+	Gun *pistol;
+public:
+	Police(int bulletNum, int handcuffsNum) : handcuffs(handcuffsNum)
+	{
+		if (bulletNum > 0)
+			pistol = new Gun(bulletNum);
+		else
+			pistol = NULL;
+	}
+	void PutHandcuff()
+	{
+		cout << "SNAP!!" << endl;
+		handcuffs--;
+	}
+	void Shot()
+	{
+		if (pistol == NULL)
+			cout << "Hut BBANG~!" << endl;
+		else
+			pistol->Shot();
+	}
+	~Police()
+	{
+		if (pistol != NULL)
+			delete pistol;
+	}
+};
+
 
 int main()
 {
-	Student stu1("홍길동", 30, "기계");
-	stu1.WhoAreYou();
+	/* 진짜 경찰 */
+	Police policeMan(5, 3);
+	policeMan.Shot();
+	policeMan.PutHandcuff();
 
+	cout << endl;
+	/* 교통 경찰 */
+	Police trafficPolice(0, 3);
+	trafficPolice.Shot();
+	trafficPolice.PutHandcuff();
+
+	/*
+	Police policeman(5, 3);
+	policeman.Shot();
+	policeman.PutHandcuff();
+	*/
 	return 0;
 }

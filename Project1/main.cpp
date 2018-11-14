@@ -19,7 +19,6 @@ public :
 	void InputMoney(int inputMoney);
 	bool OutputMoney(int outputMoney);
 	void PrintAccount();
-
 };
 
 class Checking {
@@ -124,7 +123,7 @@ int main(void)
 		case 5:
 			//프로그램 종료
 			finishFlag = true;
-			for (int i = 0; i < check.GetAccountNumber(); i++)			// 계좌 제거
+			for (int i = 0; i < check.GetAccountNumber(); i++)			// 만들어진 계좌 제거
 			{
 				delete accounts[i];
 			}
@@ -174,9 +173,9 @@ bool Account::OutputMoney(int outputMoney)
 }
 void Account::PrintAccount()
 {
-	std::cout << "계좌 ID		: "	<< account_id << endl;
-	std::cout << "이름		: "		<< name << endl;
-	std::cout << "입금액		: "		<< money << endl << endl;
+	std::cout << "계좌 ID		: "	<< account_id	<< endl;
+	std::cout << "이름		: "		<< name			<< endl;
+	std::cout << "입금액		: "		<< money		<< endl << endl;
 }
 
 
@@ -189,12 +188,7 @@ Checking::Checking(Account **firAccountAdr)
 int Checking::CheckingID(int ID)
 {
 	for (int i = 0; i < accountNumber; i++)
-	{
-		if (ID == accounts[i]->PutID())
-		{
-			return i;
-		}
-	}
+		if (ID == accounts[i]->PutID())			return i;
 	return NO_MATCH;
 }
 
@@ -210,10 +204,7 @@ void Checking::IncreaseAccountNumber(void)
 
 void Checking::PrintAccounts()
 {
-	for (int i = 0; i < accountNumber; i++)
-	{
-		accounts[i]->PrintAccount();
-	}
+	for (int i = 0; i < accountNumber; i++)		accounts[i]->PrintAccount();
 }
 
 void Checking::PrintSelect(void)

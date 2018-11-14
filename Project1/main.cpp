@@ -1,105 +1,84 @@
 #include <iostream>
+#include <stdlib.h>
 
 using namespace std;
 
-/* 상속
-	- 관계가 논리적으로 성립이 되어야 상속이라고 말할 수 있다.
-	- is A 관계, has A 관계
-	- is A 관계
-	노트북은 컴퓨터이다. Notebook is a computer.
-	- has A 관계
-	경찰은 총을 가진다. Police has a gun.
-
-	- 상속의 목적
-	class 간의 관계를 체계적으로 유지 및 관리하기 위해서이다.
-	재사용하기 위해서 <- 관계가 체계적이어서.
-
-	예시) - is A 관계 : 학생은 사람이다. Student is a person.ㄴㅁㅇㄹㅋㅌ
-*/
-
-class Gun
-{
-private:
-	int bullet;
-public:
-	Gun(int bulletNum) : bullet(bulletNum)
-	{}
-	void Shot()
-	{
-		cout << "BANG~!" << endl;
-		bullet--;
-	}
-};
-
 /*
-// is a 관계의 police class
-
-class Police : public Gun
-{
-private:
-	int handcuffs;
-public:
-	Police(int bulletNum, int handcuffsNum) : Gun(bulletNum), handcuffs(handcuffsNum)
-	{}
-	void PutHandcuff()
-	{
-		cout << "SNAP!!" << endl;
-	}
-};
+- 정규직은 사원이다.
+- 사원명, 월급을 관리할 수 있도록 클래스를 디자인하세요.
+- 사원을 관리할 수 있는 클래스를 디자인하세요.
+- 이번 달에 지불해야 할 급여의 총합
+- 간단한 인사관리 프로그램을 작성하세요.
 */
 
-// has a 관계의 police class
-
-class Police
+class FullTime
 {
 private:
-	int handcuffs;
-	Gun *pistol;
+	char name[20];
+	int pay;
 public:
-	Police(int bulletNum, int handcuffsNum) : handcuffs(handcuffsNum)
+	FullTime(const char *name, int pay) : pay(pay)
 	{
-		if (bulletNum > 0)
-			pistol = new Gun(bulletNum);
-		else
-			pistol = NULL;
+		strcpy(this->name, name);
 	}
-	void PutHandcuff()
+	int GetPay()
 	{
-		cout << "SNAP!!" << endl;
-		handcuffs--;
+		return pay;
 	}
-	void Shot()
+	void ShowName()
 	{
-		if (pistol == NULL)
-			cout << "Hut BBANG~!" << endl;
-		else
-			pistol->Shot();
+		cout << "이름 : " << name << endl;
 	}
-	~Police()
+	void ShowPay()
 	{
-		if (pistol != NULL)
-			delete pistol;
+		cout << "봉급 : " << pay << endl;
 	}
 };
 
+class Employee
+{
+private:
+	FullTime *fulltime[100];
+	int numEmployee;
+public:
+	Employee()
+	{
+		numEmployee = 0;
+	}
+	void AddEmployee(FullTime *fulltime)
+	{
+		this->fulltime[numEmployee] = fulltime;
+		numEmployee++;
+	}
+	void ShowEmployee()
+	{
+		for (int i = 0; i < numEmployee; i++)
+		{
+			fulltime[i]->ShowName();
+			fulltime[i]->ShowPay();
+			cout << endl;
+		}
+	}
+	int MoneyForMonth()
+	{
+		int sum = 0;
+		for (int i = 0; i < numEmployee; i++)
+		{
+			sum += fulltime[i]->GetPay();
+		}
+		return sum;
+	}
+};
 
 int main()
 {
-	/* 진짜 경찰 */
-	Police policeMan(5, 3);
-	policeMan.Shot();
-	policeMan.PutHandcuff();
-	cout << endl;
+	FullTime person1("진우", 3000);
+	FullTime person2("지우", 5000);
+	Employee employee;
 
-	/* 교통 경찰 */
-	Police trafficPolice(0, 3);
-	trafficPolice.Shot();
-	trafficPolice.PutHandcuff();
-
-	/*
-	Police policeman(5, 3);
-	policeman.Shot();
-	policeman.PutHandcuff();
-	*/
+	employee.AddEmployee(&person1);
+	employee.AddEmployee(&person2);
+	employee.ShowEmployee();
+	cout << employee.MoneyForMonth() << endl;
 	return 0;
 }

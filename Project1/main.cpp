@@ -14,13 +14,14 @@ using namespace std;
 	class 간의 관계를 체계적으로 유지 및 관리하기 위해서이다.
 	재사용하기 위해서 <- 관계가 체계적이어서.
 
-	예시) - is A 관계 : 학생은 사람이다. Student is a person.
+	예시) - is A 관계 : 학생은 사람이다. Student is a person.ㄴㅁㅇㄹㅋㅌ
 */
 
 class Gun
 {
 private:
 	int bullet;
+	int sas;
 public:
 	Gun(int bulletNum) : bullet(bulletNum)
 	{}
@@ -89,8 +90,8 @@ int main()
 	Police policeMan(5, 3);
 	policeMan.Shot();
 	policeMan.PutHandcuff();
-
 	cout << endl;
+
 	/* 교통 경찰 */
 	Police trafficPolice(0, 3);
 	trafficPolice.Shot();

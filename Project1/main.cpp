@@ -21,7 +21,6 @@ class Gun
 {
 private:
 	int bullet;
-	int sas;
 public:
 	Gun(int bulletNum) : bullet(bulletNum)
 	{}

@@ -4,10 +4,13 @@
 using namespace std;
 
 /*
-- 정규직은 사원이다.
-- 사원명, 월급을 관리할 수 있도록 클래스를 디자인하세요.
-- 사원을 관리할 수 있는 클래스를 디자인하세요.
-- 이번 달에 지불해야 할 급여의 총합
+- 정규직은 사원이다.(상속)
+- 사원명, 월급을 관리할 수 있도록 클래스를 디자인하세요.(캡슐화)
+- 사원을 관리할 수 있는 클래스를 디자인하세요.(다형성)
+- 이번 달에 지불해야 할 급여의 총합(virtual)
+- 영업직, 임시직의 엔터티 클래스를 작성하세요.
+- 영업직의 급여는 기본급에 성과급을 포함할 수 있도록 디자인하세요.
+- 임시직 시급으로 계산해서 지급될 수 있도록 디자인하세요.
 - 간단한 인사관리 프로그램을 작성하세요.
 */
 
@@ -56,7 +59,64 @@ public:
 		ShowYourName();
 		cout << "salary : " << GetSalary() << endl << endl;
 	}
+};
 
+class SalesWorker : public PermanentWorker
+{
+private:
+	//판매실적
+	int salesResult;
+	//상여금비율
+	double bonusRatio;
+public:
+	//생성자
+	SalesWorker(const char *name, int money, double ratio) : PermanentWorker(name, money), salesResult(0), bonusRatio(ratio)
+	{}
+	//판매실적을 더하는 함수
+	void AddSalesResult(int value)
+	{
+		salesResult += value;
+	}
+	//급여를 반환하는 함수
+	int GetSalary() const
+	{
+		return PermanentWorker::GetSalary() + (int)(salesResult * bonusRatio);
+	}
+	//급여정보를 출력하는 함수
+	void ShowSalaryInfo() const
+	{
+		ShowYourName();
+		cout << "Salary : " << GetSalary() << endl << endl;
+	}
+};
+
+class TemporaryWorker : public Employee
+{
+private:
+	//일한시간
+	int workTime;
+	//시급
+	double payPerHour;
+public:
+	//생성자
+	TemporaryWorker(const char *name, double pay) : Employee(name), workTime(0), payPerHour(pay)
+	{}
+	//근무시간을 더하는 함수
+	void AddWorkTime(int time)
+	{
+		workTime += time;
+	}
+	//급여를 반환하는 함수
+	int GetSalary() const
+	{
+		return workTime * payPerHour;
+	}
+	//급여정보를 출력하는 함수
+	void ShowEmployeeInfo() const
+	{
+		ShowYourName();
+		cout << "salary : " << GetSalary() << endl << endl;
+	}
 };
 
 //기능적 클래스 handler class
@@ -101,10 +161,20 @@ int main()
 {
 	EmployeeHandler handler;
 
+
+	//정규직 사원등록
 	handler.AddEmployee(new PermanentWorker("홍길동", 200));
-	handler.AddEmployee(new PermanentWorker("박수남", 300));
-	handler.AddEmployee(new PermanentWorker("아무개", 500));
-	
+
+	//영업직 사원등록
+	SalesWorker *seller = new SalesWorker("Hong", 1000, 0.1);
+	seller->AddSalesResult(10000);
+	handler.AddEmployee(seller);
+
+	//아르바이트직 사원등록
+	TemporaryWorker *alba = new TemporaryWorker("Kim", 0.8);
+	alba->AddWorkTime(100);
+	handler.AddEmployee(alba);
+
 	handler.ShowAllSalaryInfo();
 
 	handler.ShowTotalSalary();

@@ -1,5 +1,6 @@
 #pragma once
-#include "Account.h"
+#include "main.h"
+#include	"Account.h"
 
 class NormalAccount :	public Account
 {
@@ -8,5 +9,7 @@ private:
 public:
 	NormalAccount(int ID, int money, char* name, int rate);
 	~NormalAccount();
+	virtual void InputMoney(int inputMoney);
+	int GetInterRate();
 };
 

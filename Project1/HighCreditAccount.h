@@ -8,4 +8,5 @@ private:
 public:
 	HighCreditAccount(int ID, int money, char* name, int rate, int specialRate);
 	~HighCreditAccount();
+	void InputMoney(int inputMoney);
 };

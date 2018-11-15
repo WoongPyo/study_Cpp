@@ -1,4 +1,3 @@
-#include "main.h"
 #include "Account.h"
 
 Account::Account(int ID, int money, char* name) : accID(ID), balance(money)
@@ -20,8 +19,16 @@ int Account::GetID()
 }
 
 void Account::InputMoney(int inputMoney)
+{}
+
+int Account::GetBalance()
 {
-	balance += inputMoney;
+	return balance;
+}
+
+void Account::SetBalance(int balance)
+{
+	this->balance = balance;
 }
 
 bool Account::OutputMoney(int outputMoney)

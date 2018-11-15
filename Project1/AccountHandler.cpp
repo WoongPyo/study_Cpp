@@ -5,7 +5,36 @@ AccountHandler::AccountHandler() : accNum(0)
 
 
 AccountHandler::~AccountHandler()
-{}
+{
+	for (int i = 0; i < accNum; i++)			// 만들어진 계좌 제거
+	{
+		delete accArr[i];
+	}
+}
+
+int AccountHandler::GetInt(const char *inputStr)
+{
+	int buf;
+	cout << inputStr;
+	cin >> buf;
+	return buf;
+}
+
+int AccountHandler::GetAccType(const char *inputStr)
+{
+	int buf;
+	cout << inputStr;
+	cin >> buf;
+	if (buf == 1 || buf == 2)
+		return buf;
+	else
+		return NO_MATCH;
+}
+
+Account *AccountHandler::SelectAccount(int accNum) 
+{
+	return accArr[accNum];
+}
 
 void AccountHandler::AddAccount(Account *account)
 {
@@ -29,6 +58,10 @@ int AccountHandler::GetAccountNumber(void)
 	return accNum;
 }
 
+void AccountHandler::PrintAccounts()
+{
+	for (int i = 0; i < accNum; i++)		accArr[i]->PrintAccount();
+}
 
 void AccountHandler::PrintSelect(void)
 {
@@ -38,4 +71,13 @@ void AccountHandler::PrintSelect(void)
 	cout << "3. 출금" << endl;
 	cout << "4. 계좌정보 전체 출력" << endl;
 	cout << "5. 프로그램 종료" << endl << endl;
+}
+
+int AccountHandler::TranlateCreditGrade(int creditSel)
+{
+	if (creditSel == 1)				return LEVEL_A;
+	else if (creditSel == 2)		return LEVEL_B;
+	else if (creditSel == 3)		return LEVEL_C;
+	else							return NO_LEVEL;
+
 }

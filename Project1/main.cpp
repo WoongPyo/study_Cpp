@@ -2,104 +2,36 @@
 
 using namespace std;
 
-/* 상속
-	- 관계가 논리적으로 성립이 되어야 상속이라고 말할 수 있다.
-	- is A 관계, has A 관계
-	- is A 관계
-	노트북은 컴퓨터이다. Notebook is a computer.
-	- has A 관계
-	경찰은 총을 가진다. Police has a gun.
-
-	- 상속의 목적
-	class 간의 관계를 체계적으로 유지 및 관리하기 위해서이다.
-	재사용하기 위해서 <- 관계가 체계적이어서.
-
-	예시) - is A 관계 : 학생은 사람이다. Student is a person.ㄴㅁㅇㄹㅋㅌ
-*/
-
-class Gun
+class SoSimple
 {
 private:
-	int bullet;
+	int num;
+	int num2;
 public:
-	Gun(int bulletNum) : bullet(bulletNum)
+	SoSimple(int n, int n2) : num(n), num2(n2)
 	{}
-	void Shot()
+
+	/* 복사생성자(Copy constructor) */
+	explicit SoSimple(SoSimple &copy) : num(copy.num), num2(copy.num2)
 	{
-		cout << "BANG~!" << endl;
-		bullet--;
+		cout << "called copy constructor." << endl;
+	}
+
+	void ShowSimpleData()
+	{
+		cout << num << endl;
+		cout << num2 << endl;
 	}
 };
-
-/*
-// is a 관계의 police class
-
-class Police : public Gun
-{
-private:
-	int handcuffs;
-public:
-	Police(int bulletNum, int handcuffsNum) : Gun(bulletNum), handcuffs(handcuffsNum)
-	{}
-	void PutHandcuff()
-	{
-		cout << "SNAP!!" << endl;
-	}
-};
-*/
-
-// has a 관계의 police class
-
-class Police
-{
-private:
-	int handcuffs;
-	Gun *pistol;
-public:
-	Police(int bulletNum, int handcuffsNum) : handcuffs(handcuffsNum)
-	{
-		if (bulletNum > 0)
-			pistol = new Gun(bulletNum);
-		else
-			pistol = NULL;
-	}
-	void PutHandcuff()
-	{
-		cout << "SNAP!!" << endl;
-		handcuffs--;
-	}
-	void Shot()
-	{
-		if (pistol == NULL)
-			cout << "Hut BBANG~!" << endl;
-		else
-			pistol->Shot();
-	}
-	~Police()
-	{
-		if (pistol != NULL)
-			delete pistol;
-	}
-};
-
 
 int main()
 {
-	/* 진짜 경찰 */
-	Police policeMan(5, 3);
-	policeMan.Shot();
-	policeMan.PutHandcuff();
-	cout << endl;
+	SoSimple sim1(20, 40);
+	
+	//SoSimple sim2 = sim1; // 생성자를 호출하지 않아도 sim1에 있는 멤버변수를 복사 한다. explicit 키워드를 쓰면 이렇게 사용할 수 없음
+	SoSimple sim2(sim1);
 
-	/* 교통 경찰 */
-	Police trafficPolice(0, 3);
-	trafficPolice.Shot();
-	trafficPolice.PutHandcuff();
+	sim2.ShowSimpleData();
 
-	/*
-	Police policeman(5, 3);
-	policeman.Shot();
-	policeman.PutHandcuff();
-	*/
 	return 0;
 }

@@ -1,5 +1,4 @@
 #include "AccountHandler.h"
-#include "main.h"
 
 AccountHandler::AccountHandler() : accNum(0)
 {}
@@ -8,10 +7,20 @@ AccountHandler::AccountHandler() : accNum(0)
 AccountHandler::~AccountHandler()
 {}
 
+void AccountHandler::AddAccount(Account *account)
+{
+	accArr[accNum++] = account;
+}
+
+void AccountHandler::ShowAccountsInfo() const
+{
+	for (int i = 0; i < accNum; i++)		accArr[i]->PrintAccount();
+}
+
 int AccountHandler::CheckingID(int ID)
 {
 	for (int i = 0; i < accNum; i++)
-		if (ID == accArr[i]->PutID())			return i;
+		if (ID == accArr[i]->GetID())			return i;
 	return NO_MATCH;
 }
 
@@ -20,11 +29,6 @@ int AccountHandler::GetAccountNumber(void)
 	return accNum;
 }
 
-
-void AccountHandler::PrintAccounts()
-{
-	for (int i = 0; i < accNum; i++)		accArr[i]->PrintAccount();
-}
 
 void AccountHandler::PrintSelect(void)
 {

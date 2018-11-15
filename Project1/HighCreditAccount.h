@@ -6,6 +6,6 @@ class HighCreditAccount :	public NormalAccount
 private:
 	int specialRate;		//기본이율에 추가되는 이자율
 public:
-	HighCreditAccount();
+	HighCreditAccount(int ID, int money, char* name, int rate, int specialRate);
 	~HighCreditAccount();
 };

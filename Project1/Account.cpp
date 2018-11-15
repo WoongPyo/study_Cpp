@@ -14,7 +14,7 @@ Account::~Account()
 	delete[] cusName;
 }
 
-int Account::PutID()
+int Account::GetID()
 {
 	return accID;
 }
@@ -36,7 +36,7 @@ bool Account::OutputMoney(int outputMoney)
 }
 void Account::PrintAccount()
 {
-	std::cout << "계좌 ID		: " << accID << endl;
-	std::cout << "이름		: " << cusName << endl;
-	std::cout << "입금액		: " << balance << endl << endl;
+	cout << "계좌 ID		: " << accID << endl;
+	cout << "이름		: " << cusName << endl;
+	cout << "입금액		: " << balance << endl << endl;
 }

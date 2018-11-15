@@ -1,8 +1,7 @@
 #include "NormalAccount.h"
 
 
-
-NormalAccount::NormalAccount()
+NormalAccount::NormalAccount() : interRate(0)
 {
 }
 

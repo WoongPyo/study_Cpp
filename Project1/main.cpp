@@ -43,7 +43,6 @@ int main()
 	*/
 	Point pos1(3, 4);
 	Point pos2(10, 10);
-	Point *pt = &pos1;
 	pos1.ShowPosition();
 	pos2.ShowPosition();
 

@@ -15,13 +15,25 @@ public:
 	{
 		cout << '[' << xpos << ", " << ypos << ']' << endl;
 	}
-	Point operator+(const Point &ref)
+
+	// 멤버변수에 의한 연산자 오버로딩
+	/*
+	Point operator+(const Point &ref) const
 	{
 		Point pos(xpos + ref.xpos, ypos + ref.ypos);
 		return pos;
 	}
+	*/
+
+	//전역함수에 의한 연산자 오버로딩
+	friend Point operator+(const Point &pos1, const Point &pos2); //내부의 private함수를 사용하기 위해서 friend함수가 필요
 };
 
+Point operator+(const Point &pos1, const Point &pos2)
+{
+	Point pos(pos1.xpos + pos2.xpos, pos1.ypos + pos2.ypos);
+	return pos;
+}
 
 int main()
 {
@@ -31,14 +43,14 @@ int main()
 	*/
 	Point pos1(3, 4);
 	Point pos2(10, 10);
-
+	Point *pt = &pos1;
 	pos1.ShowPosition();
 	pos2.ShowPosition();
 
 	//연산자 오버로딩 2중 어느것으로 해도 됨.
-	//Point pos3 = pos1 + pos2;
-	Point pos3 = pos1.operator+(pos2);
-
+	Point pos3 = pos1 + pos2;
+	//Point pos3 = pos1.operator+(pos2);
+	//Point pos3 = pt->operator+(pos2);
 	pos3.ShowPosition();
 
 	return 0;

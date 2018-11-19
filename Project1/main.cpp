@@ -3,58 +3,67 @@
 
 using namespace std;
 
-/* friend 선언 */
-class Girl;
+/* friend 선언 함수인경우 */
+class Point;
 
-class Boy
+class PointOP
 {
 private:
-	int height;
-	friend class Girl;	// private에 있어도 public에 있어도 같은 기능을 한다.
+	int opCnt;
 public:
-	Boy(int len) : height(len)
+	PointOP() : opCnt(0)
 	{}
-	void ShowYourFriendInfo(Girl &frn);
+	Point PointAdd(const Point &pnt1, const Point &pnt2);
+	Point PointSub(const Point &pnt1, const Point &pnt2);
+	~PointOP()
+	{
+		cout << "Operation Timmes : " << opCnt << endl;
+	}
 };
 
-class Girl
+class Point
 {
 private:
-	char phNum[20];
+	int x;
+	int y;
 public:
-	friend class Boy; // public에 있어도 private에 있어도 같은 기능을 한다.
-	Girl(const char *num)
-	{
-		strcpy(phNum, num);
-	}
-	void ShowYourFriendInfo(Boy &frn);
+	Point(const int &xpos, const int &ypos) : x(xpos), y(ypos)
+	{}
+	//friend 함수
+	friend Point PointOP::PointAdd(const Point &pnt1, const Point &pnt2);
+	//friend 함수
+	friend Point PointOP::PointSub(const Point &pnt1, const Point &pnt2);
+	//friend 함수 <-- 전역함수를 friend선언
+	friend void ShowPointPos(const Point&);
 };
 
-void Boy::ShowYourFriendInfo(Girl &frn)
+Point PointOP::PointAdd(const Point &pnt1, const Point& pnt2)
 {
-	cout << "Her phone number : " << frn.phNum << endl;
+	opCnt++;
+	return Point(pnt1.x + pnt2.x, pnt1.y + pnt2.y);
 }
 
-void Girl::ShowYourFriendInfo(Boy &frn)
+Point PointOP::PointSub(const Point& pnt1, const Point& pnt2)
 {
-	cout << "His Height : " << frn.height << endl;
+	opCnt++;
+	return Point(pnt1.x - pnt2.x, pnt1.y - pnt2.y);
+}
+
+void ShowPointPos(const Point &pos)
+{
+	cout << "x : " << pos.x << ", ";
+	cout << "y : " << pos.y << endl;
 }
 
 int main()
 {
-	/* friend 선언 
-		- friend 선언은 객체지향의 캡슐화에서 정보은닉을 위배하는 문법임.
-		- 따라서, friend 선언은 필요한 상황에서만 사용해야 함.
-		- 연산자 오버로딩에서 전역함수를 선언시 사용.
-	*/
-	Boy boy(180);
-	Girl girl("010-1111-1111");
-
-	boy.ShowYourFriendInfo(girl);
-	girl.ShowYourFriendInfo(boy);
-
 	/*friend 선언 - 함수인 경우 */
+	Point pos1(1, 2);
+	Point pos2(2, 4);
+	PointOP op;
 
+	ShowPointPos(op.PointAdd(pos1, pos2));
+	ShowPointPos(op.PointSub(pos1, pos2));
 
 	return 0;
 }

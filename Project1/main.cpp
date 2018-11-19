@@ -3,7 +3,7 @@
 
 using namespace std;
 
-/* 연산자 오버로딩 */
+/* 단항 연산자 오버로딩 */
 class Point
 {
 private:
@@ -16,23 +16,35 @@ public:
 		cout << '[' << xpos << ", " << ypos << ']' << endl;
 	}
 
-	// 멤버변수에 의한 연산자 오버로딩
-	/*
-	Point operator+(const Point &ref) const
+	// 멤버변수에 의한 단항 연산자 오버로딩
+	
+	Point &operator++()
 	{
-		Point pos(xpos + ref.xpos, ypos + ref.ypos);
+		cout << xpos << endl;
+		Point pos(xpos++, ypos++);
 		return pos;
+		/*
+		xpos++;
+		ypos++;
+		return *this;
+		*/
 	}
-	*/
 
-	//전역함수에 의한 연산자 오버로딩
-	friend Point operator+(const Point &pos1, const Point &pos2); //내부의 private함수를 사용하기 위해서 friend함수가 필요
+	//전역함수에 의한 단항 연산자 오버로딩
+	friend Point &operator--(Point &ref); //내부의 private함수를 사용하기 위해서 friend함수가 필요
 };
 
-Point operator+(const Point &pos1, const Point &pos2)
+Point &operator--(Point &ref)
 {
-	Point pos(pos1.xpos + pos2.xpos, pos1.ypos + pos2.ypos);
+	
+	Point pos(ref.xpos--, ref.ypos--);
 	return pos;
+	
+	/*
+	ref.xpos--;
+	ref.ypos--;
+	return ref;
+	*/
 }
 
 int main()
@@ -41,16 +53,36 @@ int main()
 		-정의
 		연산자가 오버로딩 되면, 피연산자의 종류에 따라서 연산의 방식이 달라지는 것을 말함.
 	*/
-	Point pos1(3, 4);
-	Point pos2(10, 10);
-	pos1.ShowPosition();
-	pos2.ShowPosition();
 
-	//연산자 오버로딩 2중 어느것으로 해도 됨.
-	Point pos3 = pos1 + pos2;
-	//Point pos3 = pos1.operator+(pos2);
-	//Point pos3 = pt->operator+(pos2);
-	pos3.ShowPosition();
+	/* 단항 연산자 오버로딩 */
+	Point pos(1, 5);
+	pos.ShowPosition();
+	//++pos; //전위 연산자
+	pos.operator++();	//멤버함수의 경우
+	//operator++(pos);	//전역함수의 경우
+	pos.ShowPosition();
+	--pos; //전위 연산자
+	//pos.oparator--();
+	pos.ShowPosition();
+	operator--(pos);	//전역함수의 경우
+	pos.ShowPosition();
+
+	++(++pos);
+	cout << '2' << endl;
+	pos.ShowPosition();
+	--(--pos);
+	cout << '1' << endl;
+	pos.ShowPosition();
+
+	/*단항 연산자 오버로딩(후위)
+		- ++pos, --pos (전위일때)
+		pos.operator++();
+		pos.operator--();
+
+		- pos++, pos-- (후위일때)
+		pos.operator++(int); //int가 붙으면 후위 연산자 정의
+		pos.poerator--(int);
+	*/
 
 	return 0;
 }

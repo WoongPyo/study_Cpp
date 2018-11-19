@@ -3,36 +3,43 @@
 
 using namespace std;
 
-/* mutable 키워드 */
-
-class SoSimple
+/* 연산자 오버로딩 */
+class Point
 {
 private:
-	int num1;
-	mutable int num2;
+	int xpos, ypos;
 public:
-	SoSimple(int n1, int n2) : num1(n1), num2(n2)
+	Point(int x = 0, int y = 0) : xpos(x), ypos(y)
 	{}
-	void ShowSimpleData() const
+	void ShowPosition() const
 	{
-		cout << num1 << ", " << num2 << endl;
+		cout << '[' << xpos << ", " << ypos << ']' << endl;
 	}
-	void CopyToNum2() const // const함수는 본래 내부 변수 값을 바꿀수 없지만 내부 변수를 변경할 수 있는 예외를 mutable변수로 둠.
+	Point operator+(const Point &ref)
 	{
-		num2 = num1;
+		Point pos(xpos + ref.xpos, ypos + ref.ypos);
+		return pos;
 	}
 };
 
 
 int main()
 {
-	/* mutable 키워드 
-		-const 함수 내에서 멤버변수 값의 변경을 예외적으로 허용.
+	/* 연산자 오버로딩 
+		-정의
+		연산자가 오버로딩 되면, 피연산자의 종류에 따라서 연산의 방식이 달라지는 것을 말함.
 	*/
-	SoSimple sm(1, 2);
-	sm.ShowSimpleData();
-	sm.CopyToNum2();
-	sm.ShowSimpleData();
+	Point pos1(3, 4);
+	Point pos2(10, 10);
+
+	pos1.ShowPosition();
+	pos2.ShowPosition();
+
+	//연산자 오버로딩
+	//Point pos3 = pos1 + pos2;
+	Point pos3 = pos1.operator+(pos2);
+
+	pos3.ShowPosition();
 
 	return 0;
 }

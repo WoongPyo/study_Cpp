@@ -35,7 +35,7 @@ int main()
 	pos1.ShowPosition();
 	pos2.ShowPosition();
 
-	//연산자 오버로딩
+	//연산자 오버로딩 2중 어느것으로 해도 됨.
 	//Point pos3 = pos1 + pos2;
 	Point pos3 = pos1.operator+(pos2);
 

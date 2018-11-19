@@ -73,7 +73,7 @@ int main()
 
 	Point pos(3, 5);
 	Point cpy;
-//	cpy = pos--; //전역함수
+	cpy = pos--; //전역함수
 	cpy.ShowPosition();
 	pos.ShowPosition();
 

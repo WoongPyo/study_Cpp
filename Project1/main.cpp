@@ -3,34 +3,36 @@
 
 using namespace std;
 
-/* static 함수(클래스 함수) 
-	-선언된 클래스의 모든 객체가 공유.
-	- public로 선언이 되면, 클래스의 이름을 이용해서 호출이 가능.
-	- 객체의 멤버로 존재하는 것이 아님.
-*/
+/* mutable 키워드 */
 
 class SoSimple
 {
 private:
 	int num1;
-	static int num2;
+	mutable int num2;
 public:
-	SoSimple(int n) : num1(n)
+	SoSimple(int n1, int n2) : num1(n1), num2(n2)
 	{}
-	//클래스 함수
-	static void Adder(int n)
+	void ShowSimpleData() const
 	{
-		//num1 += n; //static 변수가 아니기 때문에 static함수 내에서 변경할 수 없음.
-		num2 += n;
+		cout << num1 << ", " << num2 << endl;
+	}
+	void CopyToNum2() const // const함수는 본래 내부 변수 값을 바꿀수 없지만 내부 변수를 변경할 수 있는 예외를 mutable변수로 둠.
+	{
+		num2 = num1;
 	}
 };
-
-int SoSimple::num2 = 0;
 
 
 int main()
 {
-	/* static 함수(클래스 함수) */
+	/* mutable 키워드 
+		-const 함수 내에서 멤버변수 값의 변경을 예외적으로 허용.
+	*/
+	SoSimple sm(1, 2);
+	sm.ShowSimpleData();
+	sm.CopyToNum2();
+	sm.ShowSimpleData();
 
 	return 0;
 }

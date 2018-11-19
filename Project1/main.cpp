@@ -5,11 +5,13 @@ using namespace std;
 
 /* static 변수(클래스 변수) */
 
-int simObjCnt = 0;
-int cmxObjCnt = 0;
+//int simObjCnt = 0;
+//int cmxObjCnt = 0;
 
 class SoSimple
 {
+private:
+	static int simObjCnt;
 public:
 	SoSimple()
 	{
@@ -20,6 +22,8 @@ public:
 
 class SoComplx
 {
+private:
+	static int cmxObjCnt;
 public:
 	SoComplx()
 	{
@@ -27,6 +31,9 @@ public:
 		cout << cmxObjCnt << "번째 SoComplx 객체" << endl;
 	}
 };
+
+int SoSimple::simObjCnt = 0;
+int SoComplx::cmxObjCnt = 0;
 
 int main()
 {

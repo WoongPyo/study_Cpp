@@ -1,81 +1,42 @@
 #include <iostream>
+#include <cstring>
 
 using namespace std;
 
-/* 자동차 (소유자, 연료량, 현재속도) */
-namespace CAR_CONST
+class SoSimple
 {
-	enum
+private:
+	int num;
+public:
+	SoSimple(int n) : num(n)
+	{}
+	SoSimple &AddNum(int n)
 	{
-		ID_LEN		= 20,
-		MAX_SPD		= 200,
-		FUEL_STEP	= 2,
-		ACC_STEP	= 10,
-		BRK_STEP	= 10
-	};
-}
-
-
-
-struct Car
-{
-	char gamerID[CAR_CONST::ID_LEN];
-	int fuelGauge;
-	int curSpeed;
-
-	void ShowCarState();
-	void Accel();
-	void Break();
+		num += n;
+		return *this;
+	}
+	void ShowData() const
+	{
+		cout << "num : " << num << endl;
+	}
 };
 
-void Car::ShowCarState()
+int main()
 {
-	cout << "소유자 : " << gamerID << endl;
-	cout << "연료량 : " << fuelGauge << endl;
-	cout << "속  도 : " << curSpeed << endl;
-}
+	/* const 객체 
+		- const 객체는 const 함수만 호출 가능.
+		객체의 멤버변수의 변경을 허용하지 않음.
+	*/
+	SoSimple generalObj(10);
+	generalObj.AddNum(10);
+	generalObj.ShowData();
 
-void Car::Accel()
-{
-	//연료량 체크
-	if (fuelGauge <= 0)
-		return;
-	else
-		fuelGauge -= CAR_CONST::FUEL_STEP;
+	const SoSimple constObj(100);
+	constObj.ShowData(); // const 객체는 const 함수만 호출 할 수 있다.
+	//constObj.AddNum(200);
 
-	//최고 속도 체크
-	if (curSpeed + CAR_CONST::ACC_STEP >= CAR_CONST::MAX_SPD)
-	{
-		curSpeed = CAR_CONST::MAX_SPD;
-		return;
-	}
-	curSpeed += CAR_CONST::ACC_STEP;
-}
-
-void Car::Break()
-{
-	if (curSpeed < CAR_CONST::BRK_STEP)
-	{
-		curSpeed = 0;
-		return;
-	}
-	curSpeed -= CAR_CONST::BRK_STEP;
-
-}
-
-int main(void)
-{
-	Car run77 = { "run77", 100 , 0 };
-	run77.Accel();
-	run77.Accel();
-	run77.ShowCarState();
-	run77.Break();
-	run77.ShowCarState();
-	
-	Car run88 = { "run88", 100, 0 };
-	run88.Accel();
-	run88.Break();
-	run88.ShowCarState();
+	/* const  함수 오버로딩 */
+	/* friend 선언 */
 
 	return 0;
 }

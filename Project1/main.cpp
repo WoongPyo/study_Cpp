@@ -12,8 +12,6 @@ void Counter()
 	cout << "Current cnt : " << cnt << endl;
 }
 
-/*static 변수(클래스 변수)*/
-
 int main()
 {
 	/* 정적지역변수 */

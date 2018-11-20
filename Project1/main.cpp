@@ -17,14 +17,14 @@ public:
 		strcpy(name, myName);
 		age = myAge;
 	}
-	Person &operator=(Person &ref)
+	Person &operator=(Person const &ref)
 	{
 		delete[] name;
 		int len = strlen(ref.name) + 1;
 		name = new char[len];
 		strcpy(name, ref.name);
 		age = ref.age;
-		return 
+		return *this;
 	}
 	void ShowPersonInfo() const
 	{

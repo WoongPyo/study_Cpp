@@ -26,7 +26,7 @@ class CCC : public BBB
 public:
 	void ShowYou()
 	{
-		cout << "BBB exception" << endl;
+		cout << "CCC exception" << endl;
 	}
 };
 
@@ -51,9 +51,9 @@ int main(void)
 		ExceptionGenerator(2); //BBB
 		ExceptionGenerator(1); //AAA
 	}
-	catch (AAA &expn)
+	catch (CCC &expn)
 	{
-		cout << "catch(AAA &expn)" << endl;
+		cout << "catch(CCC &expn)" << endl;
 		expn.ShowYou();
 	}
 	catch (BBB &expn)
@@ -61,9 +61,9 @@ int main(void)
 		cout << "catch(BBB &expn)" << endl;
 		expn.ShowYou();
 	}
-	catch (CCC &expn)
+	catch (AAA &expn)
 	{
-		cout << "catch(CCC &expn)" << endl;
+		cout << "catch(AAA &expn)" << endl;
 		expn.ShowYou();
 	}
 

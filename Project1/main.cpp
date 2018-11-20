@@ -3,77 +3,56 @@
 
 using namespace std;
 
-/*배열 인덱스 연산자 오버로딩 */
-class BoundCheckIntArray
-{
-private:
-	int *arr;
-	int arrLen;
-public:
-	BoundCheckIntArray(int len) : arrLen(len)
-	{
-		arr = new int[len];
-	}
-	~BoundCheckIntArray()
-	{
-		delete[] arr;
-	}
-	int GetArrLen() const
-	{
-		return arrLen;
-	}
-	int &operator[](int idx)
-	{
-		//배열의 범위 체크
-		if (idx < 0 || idx >= arrLen)
-		{
-			cout << "배열의 범위를 벗어났습니다." << endl;
-			exit(1);
-		}
+/* 예외처리 - Exception Handling */
 
-		return arr[idx];
-	}
 
-	// 배열 인덱스 연산자 오버로딩 
-	//const키워드가 오버로딩 조건으로 들어감. 외부에서 const 배열을 쓰려면 다시 정의 해야 함.
-	int &operator[](int idx) const
-	{
-		//배열의 범위 체크
-		if (idx < 0 || idx >= arrLen)
-		{
-			cout << "배열의 범위를 벗어났습니다." << endl;
-			exit(1);
-		}
-
-		return arr[idx];
-	}
-};
-
-void ShowAllData(const BoundCheckIntArray &ref)
-{
-	for (int idx = 0; idx < ref.GetArrLen(); idx++)
-	{
-		cout << ref[idx] << endl;
-	}
-}
 
 int main(void)
 {
-	/*배열 인덱스 연산자 오버로딩 */
+	/* 예외처리 - Exception Handling */
 	
-	// arrObject[2];
-	// 컴파일러는 어떻게 해석할지...
-	// arrObject.oprator[](2)
+	/* C++에서의 예외처리 */
+	//try ...블록		예외를 발견
+	//catch ...블록		예외를 인지해서 처리
+	//throw ...블록		예외 처리의 위임
+	int num1, num2;
+	cout << "두 개의 숫자 입력 : ";
+	cin >> num1 >> num2;	// 예외 발생
 
-	BoundCheckIntArray arr(5);
+	try
+	{
+		if (num2 == 0)
+			throw num2; // catch로 넘어감.
+		else
+		{
+			cout << "나눗셈의 몫 : " << num1 / num2 << endl;
+			cout << "나눗셈의 나머지 : " << num1 % num2 << endl;
+		}
+	}
+	catch(int expn)
+	{
+		cout << "제 수는 " << expn << "이 될 수 없습니다." << endl;
+		cout << "프로그램을 다시 실행하세요." << endl;
+	}
 
-	for (int i = 0; i < 5; i++)
-		arr[i] = (i + 1) * 11;
 
-	//for (int i = 0; i < 6; i++)
-	//	cout << arr[i] << endl;
 
-	//ShowAllData(arr);
+	/* 전통적인 C언어의 예외처리 */
+	//int num1, num2;
+	//cout << "두 개의 숫자 입력 : ";
+	//cin >> num1 >> num2;	// 예외 발생
+
+	//if (num2 == 0)			//예외 체크
+	//{						//예외 처리
+	//	cout << "제 수는 0이 될 수 없습니다." << endl;
+	//	cout << "프로그램을 다시 실행하세요." << endl;
+	//}
+	//else
+	//{
+	//	cout << "나눗셈의 몫 : " << num1 / num2 << endl;
+	//	cout << "나눗셈의 나머지 : " << num1 % num2 << endl;
+	//}
+
 
 	return 0;
 }

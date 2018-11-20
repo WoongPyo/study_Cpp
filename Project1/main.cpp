@@ -3,52 +3,60 @@
 
 using namespace std;
 
-/* 디폴트 대입연산자의 문제점 */
-class Person
+class First
 {
 private:
-	char *name;
-	int age;
+	int num1, num2;
 public:
-	Person(const char *myName, int myAge)
+	First(int n1 = 0, int n2 = 0) : num1(n1), num2(n2)
+	{}
+	void ShowData1()
 	{
-		int len = strlen(myName) + 1;
-		name = new char[len];
-		strcpy(name, myName);
-		age = myAge;
+		cout << num1 << ", " << num2 << endl;
 	}
-	Person &operator=(Person &ref)
+	First& operator=(const First &ref)
 	{
-		delete[] name;
-		int len = strlen(ref.name) + 1;
-		name = new char[len];
-		strcpy(name, ref.name);
-		age = ref.age;
-		return 
+		cout << "First& operator=()" << endl;
+		num1 = ref.num1;
+		num2 = ref.num2;
+		return *this;
 	}
-	void ShowPersonInfo() const
+};
+
+class Second : public First
+{
+private:
+	int num3, num4;
+public:
+	Second(int n1, int n2, int n3, int n4) : First(n1, n2), num3(n3), num4(n4)
+	{}
+	void ShowData()
 	{
-		cout << "이름 : " << name << endl;
-		cout << "나이 : " << age << endl;
+		ShowData1();
+		cout << num3 << ", " << num4 << endl;
 	}
-	~Person()
+
+	// 대입 연산자 오버로딩
+	Second &operator=(const Second &ref)
 	{
-		delete[] name;
-		cout << "Called destructor!" << endl;
+		cout << "Second& operator=()" << endl;
+		First::operator=(ref);
+		num3 = ref.num3;
+		num4 = ref.num4;
+
+		return *this;
 	}
+
 };
 
 int main(void)
 {
-	/* 디폴트 대입연산자의 문제점 */
-	
-	Person man1("Lee", 25);
-	Person man2("Yoon", 27);
+	/*상속 관계에서의 기본 대입연산자 호출 */
+	Second secondOrg(111, 222, 333, 444);
+	Second secondCpy(0, 0, 0, 0);
 
-	man2 = man1;
+	secondCpy = secondOrg;
+	secondCpy.ShowData();
 
-	man1.ShowPersonInfo();
-	man2.ShowPersonInfo();
-	
 	return 0;
 }

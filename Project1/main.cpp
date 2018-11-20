@@ -10,7 +10,7 @@ private:
 public:
 	First(int n1 = 0, int n2 = 0) : num1(n1), num2(n2)
 	{}
-	void ShowData1()
+	void ShowData()
 	{
 		cout << num1 << ", " << num2 << endl;
 	}
@@ -32,7 +32,7 @@ public:
 	{}
 	void ShowData()
 	{
-		ShowData1();
+		First::ShowData();
 		cout << num3 << ", " << num4 << endl;
 	}
 
@@ -43,10 +43,8 @@ public:
 		First::operator=(ref);
 		num3 = ref.num3;
 		num4 = ref.num4;
-
 		return *this;
 	}
-
 };
 
 int main(void)

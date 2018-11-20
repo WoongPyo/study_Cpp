@@ -22,7 +22,14 @@ void Divide(int num1, int num2)
 int main(void)
 {
 	/* 예외의 다중 위임 */
-
+	try
+	{
+		SimpleFuncOne();
+	}
+	catch (int expn)
+	{
+		cout << "예외코드 : " << expn << endl;
+	}
 	/* 예외의 전달(위임) */
 
 	int num1, num2;

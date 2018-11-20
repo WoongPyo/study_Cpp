@@ -3,38 +3,29 @@
 
 using namespace std;
 
-class First
+/* 디폴트 대입연산자의 문제점 */
+class Person
 {
 private:
-	int num1, num2;
+	char *name;
+	int age;
 public:
-	First(int n1 = 0, int n2 = 0) : num1(n1), num2(n2)
-	{}
-	void ShowData()
+	Person(const char *myName, int myAge)
 	{
-		cout << num1 << ", " << num2 << endl;
+		int len = strlen(myName) + 1;
+		name = new char[len];
+		strcpy(name, myName);
+		age = myAge;
 	}
-};
-
-class Second
-{
-private:
-	int num3, num4;
-public:
-	Second(int n3 = 0, int n4 = 0) : num3(n3), num4(n4)
-	{}
-	void ShowData()
+	void ShowPersonInfo() const
 	{
-		cout << num3 << ", " << num4 << endl;
+		cout << "이름 : " << name << endl;
+		cout << "나이 : " << age << endl;
 	}
-	// 대입 연산자 오버로딩
-	Second &operator=(const Second &ref)
+	~Person()
 	{
-		cout << "Second& operator=()" << endl;
-		num3 = ref.num3;
-		num4 = ref.num4;
-
-		return *this;
+		delete[] name;
+		cout << "Called destructor!" << endl;
 	}
 };
 
@@ -54,20 +45,6 @@ int main(void)
 	//Point pos2(9, 10);
 	//pos2 = pos1; // 연산자의 피연산자의 대상이 객체 이기 때문에 멤버 대 멤버 복사
 	//pos2.operator=(pos1);
-
-	First firstOrg(111, 222);
-	First firstCpy(222, 333);
-	firstCpy.ShowData();
-
-	firstCpy = firstOrg;
-	firstCpy.ShowData();
-
-	Second secondOrg(111, 222);
-	Second secondCpy(222, 333);
-	secondCpy.ShowData();
-
-	secondCpy = secondOrg;
-	secondCpy.ShowData();
-
+	
 	return 0;
 }

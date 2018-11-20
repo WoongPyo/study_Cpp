@@ -3,7 +3,7 @@
 
 using namespace std;
 
-/* 디폴트 대입연산자의 문제점 */
+/* 디폴트 대입연산자의 문제점 -얕은 복사 <- 깊은 복사 필요*/
 class Person
 {
 private:

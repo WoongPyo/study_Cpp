@@ -21,7 +21,12 @@ void Divide(int num1, int num2)
 
 int main(void)
 {
-	/* 예외의 다중 위임 */
+	/*	예외의 다중 위임 */
+	/*
+		예외가 처리되지 않아서, Exception이 main함수까지 도달했는데,
+		main함수에서조차 예외를 처리하지 않으면,
+		terminate함수가 호출되면서, 프로그램이 종료된다.
+	*/
 	try
 	{
 		SimpleFuncOne();
@@ -49,5 +54,5 @@ void SimpleFuncTwo(void)
 void SimpleFuncThree(void)
 {
 	cout << "SimpleFuncThree(void)" << endl;
-	throw -1;
+	throw -1;	//throw는 try블럭 안에 있을 것.
 }

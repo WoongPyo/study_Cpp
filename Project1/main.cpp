@@ -3,72 +3,71 @@
 
 using namespace std;
 
-/* 단항 연산자 오버로딩 */
-class Point
+class First
 {
 private:
-	int xpos, ypos;
+	int num1, num2;
 public:
-	Point(int x = 0, int y = 0) : xpos(x), ypos(y)
+	First(int n1 = 0, int n2 = 0) : num1(n1), num2(n2)
 	{}
-	void ShowPosition() const
+	void ShowData()
 	{
-		cout << '[' << xpos << ", " << ypos << ']' << endl;
+		cout << num1 << ", " << num2 << endl;
 	}
-
-	// 멤버변수에 의한 단항 연산자 오버로딩
-	Point &operator++()
-	{
-		xpos++;
-		ypos++;
-		return *this;
-	}
-
-	// ++ 후위연산자 오버로딩
-	Point operator++(int)
-	{
-		const Point retobj(xpos, ypos);
-		xpos++;
-		ypos++;
-		return retobj;
-	}
-
-	/* 자료형이 다른 경우의 연산자 오버로딩 */
-	Point operator*(int times)
-	{
-		Point pos(xpos*times, ypos*times);
-		return pos;
-	}
-
-	//전역함수에 의한 단항 연산자 오버로딩
-	friend Point &operator--(Point &ref); //내부의 private함수를 사용하기 위해서 friend함수가 필요
-	friend Point operator--(Point &ref, int);
 };
 
-Point &operator--(Point &ref)
+class Second
 {
-	ref.xpos--;
-	ref.ypos--;
-	return ref;
-}
+private:
+	int num3, num4;
+public:
+	Second(int n3 = 0, int n4 = 0) : num3(n3), num4(n4)
+	{}
+	void ShowData()
+	{
+		cout << num3 << ", " << num4 << endl;
+	}
+	// 대입 연산자 오버로딩
+	Second &operator=(const Second &ref)
+	{
+		cout << "Second& operator=()" << endl;
+		num3 = ref.num3;
+		num4 = ref.num4;
 
-//-- 후위연산자 오버로딩
-Point operator--(Point &ref, int)
+		return *this;
+	}
+};
+
+int main(void)
 {
-	const Point retobj(ref);
-	ref.xpos--;
-	ref.ypos--;
-	return retobj;
-}
+	/*	대입 연산자의 오버로딩 
+		-복사생성자하고 좀 비슷
+	*/
+	
+	//Point pos1(5, 7);
+	//Point pos2 = pos1;	// 복사생성자
+	//Point pos2(pos1);		// 컴파일러가 코드를 변경
+	//복사생성자의 단점 ->
+	//얕은 복사 : 멤버 대 멤버 복사 -> 깊은 복사
 
-int main()
-{
-	/* 자료형이 다른 경우의 연산자 오버로딩 */
-	Point pos(1, 2);
-	Point cpy;
+	//Point pos1(5, 7);
+	//Point pos2(9, 10);
+	//pos2 = pos1; // 연산자의 피연산자의 대상이 객체 이기 때문에 멤버 대 멤버 복사
+	//pos2.operator=(pos1);
 
-	//cpy = pos * 3;
-	cpy.ShowPosition();
+	First firstOrg(111, 222);
+	First firstCpy(222, 333);
+	firstCpy.ShowData();
+
+	firstCpy = firstOrg;
+	firstCpy.ShowData();
+
+	Second secondOrg(111, 222);
+	Second secondCpy(222, 333);
+	secondCpy.ShowData();
+
+	secondCpy = secondOrg;
+	secondCpy.ShowData();
 
 	return 0;
 }

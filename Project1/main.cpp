@@ -3,58 +3,52 @@
 
 using namespace std;
 
-class First
+/*배열 인덱스 연산자 오버로딩 */
+class BoundCheckIntArray
 {
 private:
-	int num1, num2;
+	int *arr;
+	int arrLen;
 public:
-	First(int n1 = 0, int n2 = 0) : num1(n1), num2(n2)
-	{}
-	void ShowData()
+	BoundCheckIntArray(int len) : arrLen(len)
 	{
-		cout << num1 << ", " << num2 << endl;
+		arr = new int[len];
 	}
-	First& operator=(const First &ref)
+	~BoundCheckIntArray()
 	{
-		cout << "First& operator=()" << endl;
-		num1 = ref.num1;
-		num2 = ref.num2;
-		return *this;
+		delete[] arr;
 	}
-};
+	// 배열 인덱스 연산자 오버로딩
+	int &operator[](int idx)
+	{
+		//배열의 범위 체크
+		if (idx < 0 || idx >= arrLen)
+		{
+			cout << "배열의 범위를 벗어났습니다." << endl;
+			exit(1);
+		}
 
-class Second : public First
-{
-private:
-	int num3, num4;
-public:
-	Second(int n1, int n2, int n3, int n4) : First(n1, n2), num3(n3), num4(n4)
-	{}
-	void ShowData()
-	{
-		First::ShowData();
-		cout << num3 << ", " << num4 << endl;
-	}
-
-	// 대입 연산자 오버로딩
-	Second &operator=(const Second &ref)
-	{
-		cout << "Second& operator=()" << endl;
-		First::operator=(ref);
-		num3 = ref.num3;
-		num4 = ref.num4;
-		return *this;
+		return arr[idx];
 	}
 };
 
 int main(void)
 {
-	/*상속 관계에서의 기본 대입연산자 호출 */
-	Second secondOrg(111, 222, 333, 444);
-	Second secondCpy(0, 0, 0, 0);
+	/*배열 인덱스 연산자 오버로딩 */
+	
+	// arrObject[2];
+	// 컴파일러는 어떻게 해석할지...
+	// arrObject.oprator[](2)
 
-	secondCpy = secondOrg;
-	secondCpy.ShowData();
+	BoundCheckIntArray arr(5);
+
+	for (int i = 0; i < 5; i++)
+		arr[i] = (i + 1) * 11;
+
+	for (int i = 0; i < 6; i++)
+		cout << arr[i] << endl;
+
+	//ShowAllData(arr);
 
 	return 0;
 }

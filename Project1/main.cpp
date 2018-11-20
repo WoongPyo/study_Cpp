@@ -21,7 +21,6 @@ void Divide(int num1, int num2)
 
 int main(void)
 {
-	SimpleFuncOne();
 	/* 예외의 다중 위임 */
 	try
 	{

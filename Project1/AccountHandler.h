@@ -16,7 +16,6 @@ private:
 
 public:
 	AccountHandler(BoundCheckPointArray arr);
-	~AccountHandler();
 	int GetInt(const char *inputStr);			// 정수값을 받음
 	Account *SelectAccount(int accNum);
 	int GetAccType(const char *inputStr);

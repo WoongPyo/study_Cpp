@@ -3,11 +3,6 @@
 AccountHandler::AccountHandler(BoundCheckPointArray arr) : arrays(arr)
 {}
 
-
-AccountHandler::~AccountHandler()
-{
-}
-
 int AccountHandler::GetInt(const char *inputStr)
 {
 	int buf;

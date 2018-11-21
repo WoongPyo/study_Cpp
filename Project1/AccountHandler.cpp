@@ -1,7 +1,9 @@
 #include "AccountHandler.h"
 
-AccountHandler::AccountHandler(BoundCheckPointArray arr) : arrays(arr)
-{}
+AccountHandler::AccountHandler(int maxNum)
+{
+	arrays = new BoundCheckPointArray(maxNum);
+}
 
 int AccountHandler::GetInt(const char *inputStr)
 {
@@ -24,34 +26,27 @@ int AccountHandler::GetAccType(const char *inputStr)
 
 Account *AccountHandler::SelectAccount(int accNum) 
 {
-	return accArr[accNum];
+	return arrays->SelectAccount(accNum);
 }
 
 void AccountHandler::AddAccount(Account *account)
 {
-	accArr[accNum++] = account;
+	arrays->AddAccount(account);
 }
 
 void AccountHandler::ShowAccountsInfo() const
 {
-	for (int i = 0; i < accNum; i++)		accArr[i]->PrintAccount();
+	arrays->ShowAccountsInfo();
 }
 
 int AccountHandler::CheckingID(int ID)
 {
-	for (int i = 0; i < accNum; i++)
-		if (ID == accArr[i]->GetID())			return i;
-	return NO_MATCH;
+	arrays->CheckingID(ID);
 }
 
 int AccountHandler::GetAccountNumber(void)
 {
-	return accNum;
-}
-
-void AccountHandler::PrintAccounts()
-{
-	for (int i = 0; i < accNum; i++)		accArr[i]->PrintAccount();
+	arrays->GetAccountNumber();
 }
 
 void AccountHandler::PrintSelect(void)

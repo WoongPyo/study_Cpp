@@ -17,7 +17,7 @@ int main()
 
 	bool finishFlag = false;
 
-	AccountHandler handler;
+	AccountHandler handler(100);
 
 	while (1)
 	{
@@ -27,7 +27,11 @@ int main()
 		{
 		case 1:
 			//계좌를 개설
-			accSel = handler.GetInt("필요로 하는 계좌의 형태는 무엇입니까?(1.보통예금계좌 2.신용계좌)");	// ID를 받음
+			try
+			{
+				throw handler.GetInt("필요로 하는 계좌의 형태는 무엇입니까?(1.보통예금계좌 2.신용계좌)");	// ID를 받음
+			}
+			catch(int accSel)
 			if (accSel == NORMAL || accSel == CREDIT)
 			{
 				cout << endl << "[계좌 개설]" << endl;
@@ -104,7 +108,7 @@ int main()
 		case 4:
 			//계좌정보출력
 			cout << endl << "[전체출력]" << endl;						// 계좌 전부 출력
-			handler.PrintAccounts();
+			handler.ShowAccountsInfo();
 			break;
 		case 5:
 			//프로그램 종료

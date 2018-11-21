@@ -1,12 +1,12 @@
 #pragma once
 #include "main.h"
 #include "Account.h"
+#include "BoundCheckPointArray.h"
 
 class AccountHandler
 {
 private:
-	Account *accArr[100];						// 계좌를 관리하는 배열
-	int accNum;									// 현재 등록된 계좌수
+	BoundCheckPointArray array;
 
 public:
 	AccountHandler();

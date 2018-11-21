@@ -121,6 +121,7 @@
   <ItemGroup>
     <ClCompile Include="Account.cpp" />
     <ClCompile Include="AccountHandler.cpp" />
+    <ClCompile Include="BoundCheckPointArray.cpp" />
     <ClCompile Include="HighCreditAccount.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="NormalAccount.cpp" />
@@ -128,6 +129,7 @@
   <ItemGroup>
     <ClInclude Include="Account.h" />
     <ClInclude Include="AccountHandler.h" />
+    <ClInclude Include="BoundCheckPointArray.h" />
     <ClInclude Include="HighCreditAccount.h" />
     <ClInclude Include="main.h" />
     <ClInclude Include="NormalAccount.h" />

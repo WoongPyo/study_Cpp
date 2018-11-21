@@ -8,7 +8,11 @@ class AccountHandler
 private:
 	BoundCheckPointArray arrays;
 
-	AccountHandler &arr(AccountHandler buf);
+	// 동일한 객체(사번 111이라는 객체)가 시스템 내에서 존재하지 않도록 하기 위해서.
+	AccountHandler &operator=(const AccountHandler &buf) {}
+
+	// 복사생성자를 막는 방법
+	AccountHandler(const AccountHandler &ref) {}
 
 public:
 	AccountHandler(BoundCheckPointArray arr);

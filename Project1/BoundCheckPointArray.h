@@ -5,8 +5,14 @@
 class BoundCheckPointArray
 {
 private:
-	Account *accArr[100];						// 계좌를 관리하는 배열
+	Account *accArr;						// 계좌를 관리하는 배열
 	int accNum;									// 현재 등록된 계좌수
+
+	// 동일한 객체(사번 111이라는 객체)가 시스템 내에서 존재하지 않도록 하기 위해서.
+	AccountHandler &operator=(const AccountHandler &buf) {}
+
+	// 복사생성자를 막는 방법
+	AccountHandler(const AccountHandler &ref) {}
 
 public:
 	BoundCheckPointArray();

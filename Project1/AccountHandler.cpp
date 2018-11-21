@@ -41,12 +41,12 @@ void AccountHandler::ShowAccountsInfo() const
 
 int AccountHandler::CheckingID(int ID)
 {
-	arrays->CheckingID(ID);
+	return arrays->CheckingID(ID);
 }
 
 int AccountHandler::GetAccountNumber(void)
 {
-	arrays->GetAccountNumber();
+	return arrays->GetAccountNumber();
 }
 
 void AccountHandler::PrintSelect(void)

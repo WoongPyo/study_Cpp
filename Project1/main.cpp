@@ -14,6 +14,7 @@ int main()
 	int additionalRate;
 	int accNum;
 	int accSel;
+	bool exitButton=true;
 
 	bool finishFlag = false;
 
@@ -31,24 +32,32 @@ int main()
 			{
 				while (1)
 				{
-					accSel = handler.GetInt("필요로 하는 계좌의 형태는 무엇입니까?(1.보통예금계좌 2.신용계좌 3.메뉴나가기)");	// ID를 받음
-					if (accSel == NORMAL || accSel == CREDIT || accSel == EXIT)
+					accSel = handler.GetInt("필요로 하는 계좌의 형태는 무엇입니까?(1.보통예금계좌 2.신용계좌 0.메뉴나가기)");	// ID를 받음
+					if (accSel == EXIT)
+						throw exitButton;
+					if (accSel == NORMAL || accSel == CREDIT)
 						throw accSel;
 					cout << "필요로 하는 계좌의 형태가 존재하지 않습니다." << endl;
 				}
 			}
+			catch (bool exitButton) { break; }
 			catch (int accSel)
 			{
 				try
 				{
-					cout << endl << "[계좌 개설]" << endl;
-					iDbuf = handler.GetInt("계좌 ID		: ");					// ID를 받음
+					while (1)
+					{
+						cout << endl << "[계좌 개설]" << endl;
+						iDbuf = handler.GetInt("계좌 ID		: ");					// ID를 받음
+						if (iDbuf == EXIT)
+							throw exitButton;
+						if (handler.CheckingID(iDbuf) == NO_MATCH)					// 공통된 ID가 있는지 확인 이후 계좌개설
+							throw iDbuf;
 
-					if (handler.CheckingID(iDbuf) == NO_MATCH)					// 공통된 ID가 있는지 확인 이후 계좌개설
-						throw iDbuf;
-
-					cout << "같은 ID가 존재 합니다." << endl;
+						cout << "같은 ID가 존재 합니다. 다른 아이디를 입력하세요. (나가려면 0키를 누르세요.)" << endl;
+					}
 				}
+				catch (bool exitButton) { break; }
 				catch(int iDbuf)
 				{
 					interestbuf = handler.GetInt("기본이율(%)	: ");
@@ -74,14 +83,22 @@ int main()
 			break;
 		case 2:
 			//입금
-			cout << endl << "[입금]" << endl;
-			iDbuf = handler.GetInt("계좌 ID		: ");
-			accNum = handler.CheckingID(iDbuf);
-			if (accNum == NO_MATCH)										// 같은 ID를 가진 계좌가 존재하지 않음
+			try
 			{
-				cout << "같은 ID가 존재 하지 않습니다." << endl;
+				while (1)
+				{
+					cout << endl << "[입금]" << endl;
+					iDbuf = handler.GetInt("계좌 ID		: ");
+					accNum = handler.CheckingID(iDbuf);
+					if (accNum == EXIT)
+						throw exitButton;
+					if (accNum != NO_MATCH)										// 같은 ID를 가진 계좌가 존재하지 않음
+						throw accNum;
+					cout << "같은 ID를 가진 계좌가 존재 하지 않습니다. 다시 입력하세요. (나가려면 0키를 누르세요.)" << endl;
+				}
 			}
-			else
+			catch (bool exitButton) { break; }
+			catch(int accNum)
 			{
 				moneybuf = handler.GetInt("입금액		: ");
 				handler.SelectAccount(accNum)->InputMoney(moneybuf);					// 지정 계좌에 돈을 입금
@@ -90,23 +107,36 @@ int main()
 			break;
 		case 3:
 			//출금
-			cout << endl << "[출금]" << endl;
-			iDbuf = handler.GetInt("계좌 ID		: ");
-			accNum = handler.CheckingID(iDbuf);
-			if (accNum == NO_MATCH)										// 같은 ID를 가진 계좌가 존재하지 않음
+			try
 			{
-				cout << "같은 ID가 존재 하지 않습니다." << endl;
+				cout << endl << "[출금]" << endl;
+				iDbuf = handler.GetInt("계좌 ID		: ");
+				accNum = handler.CheckingID(iDbuf);
+				if (accNum == EXIT)
+					throw exitButton;
+				if (accNum != NO_MATCH)										// 같은 ID를 가진 계좌가 존재하지 않음
+					throw accNum;
+				cout << "같은 ID를 가진 계좌가 존재 하지 않습니다. 다시 입력하세요. (나가려면 0키를 누르세요.)" << endl;
 			}
-			else
+			catch (bool exitButton) { break; }
+			catch (int accNum)
 			{
-				moneybuf = handler.GetInt("출금액		: ");
-				if (handler.SelectAccount(accNum)->OutputMoney(moneybuf))			// 지정 계좌에 입력한 돈을 출금가능 확인
+				try
+				{
+					while (1)
+					{
+						moneybuf = handler.GetInt("출금액		: ");
+						if (moneybuf == EXIT)
+							throw exitButton;
+						if (handler.SelectAccount(accNum)->OutputMoney(moneybuf))			// 지정 계좌에 입력한 돈을 출금가능 확인
+							throw 0;
+						cout << "출금액이 잔액보다 많습니다. 다시 입력하세요. (나가려면 0키를 누르세요.)" << endl << endl;
+					}
+				}
+				catch (bool exitButton) { break; }
+				catch(int k)
 				{
 					cout << "출금완료 되었습니다." << endl << endl;
-				}
-				else
-				{
-					cout << "출금액이 잔액보다 많습니다." << endl << endl;
 				}
 			}
 			break;

@@ -63,7 +63,7 @@ int main()
 	/* 객체의 저장을 위한 배열 클래스의 정의 */
 	BoundCheckPointArray arr(3);
 
-	arr[0] = Point(3, 4); //기본 대입연산자 호출 -> Point객체의 멤버 (xPos,yPos) 0,0을 3,4로 변경
+	arr[0] = new Point(3, 4); //기본 대입연산자 호출 -> Point객체의 멤버 (xPos,yPos) 0,0을 3,4로 변경??
 	//내부 멤버변수가 2개 생기는 것을 막아야 할 경우 -> 막아야 하는게 맞을 수 있음.
 	arr[1] = Point(5, 6); //기본 대입연산자 호출
 	arr[2] = Point(7, 8); //기본 대입연산자 호출

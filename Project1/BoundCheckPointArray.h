@@ -9,8 +9,8 @@ private:
 	int accNum;									// 현재 등록된 계좌수
 
 public:
-	Account *SelectAccount(int accNum);
 	BoundCheckPointArray();
 	~BoundCheckPointArray();
+	Account *SelectAccount(int accNum);
 };
 

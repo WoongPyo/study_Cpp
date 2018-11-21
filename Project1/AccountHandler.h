@@ -6,10 +6,12 @@
 class AccountHandler
 {
 private:
-	BoundCheckPointArray array;
+	BoundCheckPointArray arrays;
+
+	AccountHandler &arr(AccountHandler buf);
 
 public:
-	AccountHandler();
+	AccountHandler(BoundCheckPointArray arr);
 	~AccountHandler();
 	int GetInt(const char *inputStr);			// 정수값을 받음
 	Account *SelectAccount(int accNum);

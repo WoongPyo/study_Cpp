@@ -1,15 +1,11 @@
 #include "AccountHandler.h"
 
-AccountHandler::AccountHandler() : accNum(0)
+AccountHandler::AccountHandler(BoundCheckPointArray arr) : arrays(arr)
 {}
 
 
 AccountHandler::~AccountHandler()
 {
-	for (int i = 0; i < accNum; i++)			// 만들어진 계좌 제거
-	{
-		delete accArr[i];
-	}
 }
 
 int AccountHandler::GetInt(const char *inputStr)

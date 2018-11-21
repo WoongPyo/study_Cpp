@@ -3,6 +3,7 @@
 #include <iostream>
 
 #define NO_MATCH	101
+#define EXIT		9999
 using namespace std;
 
 // 신용등급

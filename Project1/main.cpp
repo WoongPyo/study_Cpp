@@ -29,15 +29,27 @@ int main()
 			//계좌를 개설
 			try
 			{
-				throw handler.GetInt("필요로 하는 계좌의 형태는 무엇입니까?(1.보통예금계좌 2.신용계좌)");	// ID를 받음
+				while (1)
+				{
+					accSel = handler.GetInt("필요로 하는 계좌의 형태는 무엇입니까?(1.보통예금계좌 2.신용계좌 3.메뉴나가기)");	// ID를 받음
+					if (accSel == NORMAL || accSel == CREDIT || accSel == EXIT)
+						throw accSel;
+					cout << "필요로 하는 계좌의 형태가 존재하지 않습니다." << endl;
+				}
 			}
-			catch(int accSel)
-			if (accSel == NORMAL || accSel == CREDIT)
+			catch (int accSel)
 			{
-				cout << endl << "[계좌 개설]" << endl;
-				iDbuf = handler.GetInt("계좌 ID		: ");					// ID를 받음
+				try
+				{
+					cout << endl << "[계좌 개설]" << endl;
+					iDbuf = handler.GetInt("계좌 ID		: ");					// ID를 받음
 
-				if (handler.CheckingID(iDbuf) == NO_MATCH)					// 공통된 ID가 있는지 확인 이후 계좌개설
+					if (handler.CheckingID(iDbuf) == NO_MATCH)					// 공통된 ID가 있는지 확인 이후 계좌개설
+						throw iDbuf;
+
+					cout << "같은 ID가 존재 합니다." << endl;
+				}
+				catch(int iDbuf)
 				{
 					interestbuf = handler.GetInt("기본이율(%)	: ");
 					if(accSel == NORMAL)
@@ -58,14 +70,7 @@ int main()
 						handler.AddAccount(new HighCreditAccount(iDbuf, moneybuf, namebuf, interestbuf, additionalRate));
 					}
 				}
-				else
-				{
-					cout << "같은 ID가 존재 합니다." << endl;
-					break;
-				}
 			}
-			else
-				cout << "필요로 하는 계좌의 형태가 존재하지 않습니다." << endl;
 			break;
 		case 2:
 			//입금

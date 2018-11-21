@@ -2,70 +2,53 @@
 #include <cstring>
 
 using namespace std;
-/* 예외 처리를 위한 상속관계에서의 예외위임에 따른 주의사항 */
-class AAA
+
+class Point
 {
+private:
+	int xPos, yPos;
 public:
-	void ShowYou()
+	Point(int x=0, int y=0) : xPos(x), yPos(y)
+	{}
+	void ShowData() const
 	{
-		cout << "AAA exception" << endl;
+		cout << "X좌표 : " << xPos << " , "
+			<< "Y좌표 : " << yPos << endl;
 	}
 };
 
-class BBB : public AAA
+class BoundCheckPointArray
 {
+private:
+	Point *arr;
+	int arrLen;
 public:
-	void ShowYou()
+	BoundCheckPointArray(int len) : arrLen(len)
 	{
-		cout << "BBB exception" << endl;
+		arr = new Point[len];
+	}
+	Point &operator[](int idx)
+	{
+		if (idx < 0 || idx >= arrLen)
+		{
+			cout << "매별의 범위를 벗어났습니다." << endl;
+			exit(1);
+		}
+		return arr[idx];
 	}
 };
 
-class CCC : public BBB
+int main()
 {
-public:
-	void ShowYou()
-	{
-		cout << "CCC exception" << endl;
-	}
-};
+	/* 객체의 저장을 위한 배열 클래스의 정의 */
+	BoundCheckPointArray arr(3);
 
-void ExceptionGenerator(int expn)
-{
-	if (expn == 1)
-		throw AAA();
-	else if (expn == 2)
-		throw BBB();
-	else
-		throw CCC();
-}
+	arr[0] = Point(3, 4);
+	arr[1] = Point(5, 6);
+	arr[2] = Point(7, 8);
 
-
-int main(void)
-{
-	/* 예외 처리를 위한 상속관계에서의 예외위임에 따른 주의사항 */
-	
-	try
-	{
-		ExceptionGenerator(3); //CCC
-		ExceptionGenerator(2); //BBB
-		ExceptionGenerator(1); //AAA
-	}
-	catch (CCC &expn)
-	{
-		cout << "catch(CCC &expn)" << endl;
-		expn.ShowYou();
-	}
-	catch (BBB &expn)
-	{
-		cout << "catch(BBB &expn)" << endl;
-		expn.ShowYou();
-	}
-	catch (AAA &expn)
-	{
-		cout << "catch(AAA &expn)" << endl;
-		expn.ShowYou();
-	}
+	for(int i=0; i<3; i++)
+		arr[i].ShowData();
 
 	return 0;
 }

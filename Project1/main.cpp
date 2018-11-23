@@ -3,155 +3,67 @@
 
 using namespace std;
 
-/* 사용자 정의의 String class*/
-
-class String
-{
-private:
-	int len;
-	char *str;
-public:
-	String();					//매개변수가 없는 생성자
-	String(const char *s);		//매개변수가 있는 생성자
-	String(const String &s);	//복사 생성자
-	~String();
-	String &operator=(const String &s);
-	String operator+(const String &s);
-	String &operator+=(const String &s);
-	bool operator==(const String &s);
-	friend ostream &operator<<(ostream &os, const String &s);
-	friend istream &operator>>(istream &is, String &s);
-	int GetLen()
-	{
-		return len;
-	}
-};
-
-String::String()
-{
-	len = 0;
-	str = NULL;
-}
-
-//매개변수가 있는 생성자
-String::String(const char *s)
-{
-	len = strlen(s) + 1;
-	str = new char[len];
-	strcpy(str,s);
-}
-//복사 생성자
-String::String(const String &s)
-{
-	len = s.len;
-	str = new char[len];
-	strcpy(str, s.str);
-}
-//소멸자
-String::~String()
-{
-	if(str != NULL)
-		delete[] str;
-}
-//operator= 연산자 오버로딩
-String &String::operator=(const String &s)
-{
-	if (str != NULL)
-		delete[] str;
-
-	len = s.len;
-	str = new char[len];
-	strcpy(str, s.str);
-
-	return *this;
-}
-//operator+ 연산자 오버로딩
-String String::operator+(const String &s)
-{
-	String buf;
-
-	buf.len = len + s.len - 1;
-	buf.str = new char[buf.len];
-	strcpy(buf.str, str);
-	strcat(buf.str, s.str);
-
-	return buf;
-}
-//operator+=
-String &String::operator+=(const String &s)
-{
-	len = len + s.len - 1;
-	char *buf = new char[len];
-	strcpy(buf, str);
-	strcat(buf, s.str);
-	if(str != NULL)
-		delete[] str;
-	str = buf;
-
-	return *this;
-}
-
-//operator==
-bool String::operator==(const String &s)
-{
-	return strcmp(str, s.str) ? false : true;
-	/*
-	int cmp = strcmp(str, s.str);
-	if (cmp == 0)
-		return true;
-	else
-		return false;
-	*/
-}
-
+/* 템플릿(Template) */
 /*
-	입출력을 위해서 iostream 헤더파일을 사용
-	입력 : istream class
-	출력 : ostream class
+int Add(int num1, int num2)
+{
+	return num1 + num2;
+}
+
+	기능: 덧셈
+	대상 자료형 : int형 데이터
+
+template <typename T> 또는 template <class T> <-- 무조건 함수 앞에 있어야 함.
+T Add(T num1, T num2)
+{
+	return num1 + num2;
+}
 */
-
-//출력을 위한 << 연산자 오버로딩
-ostream &operator<<(ostream &os, const String &s)
+template <class T1, class T2>
+void ShowData(double num)
 {
-	os << s.str;
-	return os;
+	cout << (T1)num << ", " << (T2)num << endl;
 }
 
-//입력을 위한 >> 연산자 오버로딩
-istream & operator>> (istream &is, String &s)
+template <typename T>
+T Add(T num1, T num2)
 {
-	char str[100];
-	cout << endl << strlen(str) << endl;
-	is >> str;
-	cout << strlen(str) << endl;
-	s = String(str);
-
-	return is;
+	cout << "T Add(T num1, T num2)" << endl;
+	return num1 + num2;
 }
+
+int Add(int num1, int num2)
+{
+	cout << "int Add(int num1, int num2)" << endl;
+	return num1 + num2;
+}
+
+istream str;
 
 int main()
 {
-	/* C++ 표준 string class*/
-	String str1 = "I like string class. ";
-	String str2 = "Me too.";
-	String str3 = str1 + str2;
+	/*
+	템플릿(Template)
+	- 뜻 : 형판 -> 모형자.
+	- 함수 템플릿, 클래스 템플릿
+	  다양한 자료형의 함수, 클래스를 만드는 도구.
+	*/
+	//<int> : T를 int로 해서 만들어진 함수를 호출.
+	//		-> 템플릿 함수 : 템플릿을 기반으로 컴파일러가 만들어 내는 유형의 함수.
+	cout << Add(15, 20) << endl; //int형 형태의 함수가 출력됨.
 
-	cout << str1 << endl;
-	cout << str2 << endl;
-	cout << str3 << endl;
+	cout << Add<int>(15, 20) << endl; 
+	/*
+	위의 구문을 만나면...
+		int Add(int num1, int num2)
+		{
+			return num1 + num2;
+		}
+	*/
+	cout << Add<double>(2.9, 5.5) << endl;
+	ShowData<char, int>(65);
 
-	str1 += str2;
 
-	if (str1 == str3)
-		cout << "동일문자열" << endl;
-	else
-		cout << "다른문자열" << endl;
-
-	String str4;
-
-	cout << "문자열 입력 : ";
-	cin >> str4;
-	cout << "입력한 문자열 : " << str4 << str4.GetLen() << endl;
-
+	cout << "mfi" << endl;
 	return 0;
 }

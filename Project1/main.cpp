@@ -35,6 +35,7 @@ int main()
 	// 기준이 애매한 경우.
 	// const char *의 경우
 	cout << Max("Simple", "Best") << endl;
+
 	// char *의 경우
 	char str1[] = "Simple";
 	char str2[] = "Best";

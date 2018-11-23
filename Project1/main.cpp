@@ -10,7 +10,7 @@ T Max(T a, T b)
 	return a > b ? a : b;
 }
 
-template<> // template<>인 경우 형을 지정하지 않아. 특수화 하는 것임. 
+template<> // template<>인 경우 형을 지정하지 않아. 특수화 하는 것임. 지정된 변수의 형태는 다음과 같은 형태로 변환하자.
 char *Max(char *a, char *b)
 {
 	cout << "char *Max(char *a, char *b)" << endl;
@@ -44,3 +44,5 @@ int main()
 
 	return 0;
 }
+
+istream sdf;

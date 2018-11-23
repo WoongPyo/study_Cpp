@@ -28,21 +28,26 @@ int main()
 {
 	/*	템플릿(Template)의 특수화*/
 
+	//cout << Max<int>(11, 15) << endl; // 가능(이런 형태가 더 올바름)
 	cout << Max(11, 15) << endl;
+	//cout << Max<char>('T','Q') << endl; // 가능(이런 형태가 더 올바름)
 	cout << Max('T','Q') << endl;
+	//cout << Max<float>(3.5, 10.5) << endl; // 가능(이런 형태가 더 올바름)
 	cout << Max(3.5, 10.5) << endl;
 
 	// 기준이 애매한 경우.
 	// const char *의 경우
+	//cout << Max<const char *>("Simple", "Best") << endl; // 가능(이런 형태가 더 올바름)
 	cout << Max("Simple", "Best") << endl;
 
 	// char *의 경우
 	char str1[] = "Simple";
 	char str2[] = "Best";
+	//cout << Max<char *>(str1, str2) << endl; // 가능(이런 형태가 더 올바름)
 	cout << Max(str1, str2) << endl;
 
 
 	return 0;
 }
 
-istream sdf;
+//istream sdf;

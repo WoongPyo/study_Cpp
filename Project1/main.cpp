@@ -19,6 +19,12 @@ public:
 	String operator+(const String &s);
 	String &operator+=(const String &s);
 	bool operator==(const String &s);
+	friend ostream &operator<<(ostream &os, const String &s);
+	friend istream &operator>>(istream &is, String &s);
+	int GetLen()
+	{
+		return len;
+	}
 };
 
 String::String()
@@ -30,63 +36,97 @@ String::String()
 //매개변수가 있는 생성자
 String::String(const char *s)
 {
-	len = strlen(s);
+	len = strlen(s) + 1;
+	str = new char[len];
 	strcpy(str,s);
 }
-
 //복사 생성자
 String::String(const String &s)
 {
 	len = s.len;
+	str = new char[len];
 	strcpy(str, s.str);
 }
-
 //소멸자
 String::~String()
 {
-	delete[] str;
+	if(str != NULL)
+		delete[] str;
 }
-
-//operator=
+//operator= 연산자 오버로딩
 String &String::operator=(const String &s)
 {
+	if (str != NULL)
+		delete[] str;
+
 	len = s.len;
-	str = s.str;
+	str = new char[len];
+	strcpy(str, s.str);
 
 	return *this;
 }
-
-//operator+
+//operator+ 연산자 오버로딩
 String String::operator+(const String &s)
 {
 	String buf;
-	len = len + s.len;
-	buf.str = new char[len + 1];
-	strcpy(buf.str, str);
-	strcpy(buf.str + len, s.str);
-	return *this;
-}
 
+	buf.len = len + s.len - 1;
+	buf.str = new char[buf.len];
+	strcpy(buf.str, str);
+	strcat(buf.str, s.str);
+
+	return buf;
+}
 //operator+=
 String &String::operator+=(const String &s)
 {
-	len = len + s.len;
-	char *buf = new char[len + 1];
+	len = len + s.len - 1;
+	char *buf = new char[len];
 	strcpy(buf, str);
-	strcpy(buf + len, s.str);
-	delete[] str;
+	strcat(buf, s.str);
+	if(str != NULL)
+		delete[] str;
 	str = buf;
+
 	return *this;
 }
 
 //operator==
 bool String::operator==(const String &s)
 {
+	return strcmp(str, s.str) ? false : true;
+	/*
 	int cmp = strcmp(str, s.str);
 	if (cmp == 0)
 		return true;
 	else
 		return false;
+	*/
+}
+
+/*
+	입출력을 위해서 iostream 헤더파일을 사용
+	입력 : istream class
+	출력 : ostream class
+*/
+
+//출력을 위한 << 연산자 오버로딩
+ostream &operator<<(ostream &os, const String &s)
+{
+	os << s.str;
+	return os;
+}
+
+//입력을 위한 >> 연산자 오버로딩
+istream & operator>> (istream &is, String &s)
+{
+	char str[100];
+	cout << endl << strlen(str) << endl;
+	is >> str;
+	cout << strlen(str) << endl;
+	s = String(str);
+
+	return is;
 }
 
 int main()
@@ -107,11 +147,11 @@ int main()
 	else
 		cout << "다른문자열" << endl;
 
-	string str4;
+	String str4;
 
 	cout << "문자열 입력 : ";
 	cin >> str4;
-	cout << "입력한 문자열 : " << str4 << endl;
+	cout << "입력한 문자열 : " << str4 << str4.GetLen() << endl;
 
 	return 0;
 }

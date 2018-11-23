@@ -18,7 +18,7 @@ public:
 	String &operator=(const String &s);
 	String operator+(const String &s);
 	String &operator+=(const String &s);
-	String &operator==(const String &s);
+	bool operator==(const String &s);
 };
 
 String::String()
@@ -50,25 +50,43 @@ String::~String()
 //operator=
 String &String::operator=(const String &s)
 {
+	len = s.len;
+	str = s.str;
 
+	return *this;
 }
 
 //operator+
 String String::operator+(const String &s)
 {
-
+	String buf;
+	len = len + s.len;
+	buf.str = new char[len + 1];
+	strcpy(buf.str, str);
+	strcpy(buf.str + len, s.str);
+	return *this;
 }
 
 //operator+=
 String &String::operator+=(const String &s)
 {
-
+	len = len + s.len;
+	char *buf = new char[len + 1];
+	strcpy(buf, str);
+	strcpy(buf + len, s.str);
+	delete[] str;
+	str = buf;
+	return *this;
 }
 
 //operator==
-String &String::operator==(const String &s)
+bool String::operator==(const String &s)
 {
-
+	int cmp = strcmp(str, s.str);
+	if (cmp == 0)
+		return true;
+	else
+		return false;
 }
 
 int main()

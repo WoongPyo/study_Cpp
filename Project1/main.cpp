@@ -20,8 +20,6 @@ char *Max(char *a, char *b)
 template<>
 const char *Max(const char *a, const char *b)
 {
-	cout << a << endl;
-	cout << b << endl;
 	cout << "const char *Max(const char *a, const char *b)" << endl;
 	return strcmp(a, b) > 0 ? a : b;
 }

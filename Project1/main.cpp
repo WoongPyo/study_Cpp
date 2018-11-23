@@ -3,6 +3,9 @@
 
 using namespace std;
 
+/* 클래스 템플릿 */
+
+
 /* 템플릿(Template)의 특수화 */
 template <class T>
 T Max(T a, T b)
@@ -26,6 +29,9 @@ const char *Max(const char *a, const char *b)
 
 int main()
 {
+	/* 클래스 템플릿 */
+
+
 	/*	템플릿(Template)의 특수화*/
 
 	cout << Max(11, 15) << endl;

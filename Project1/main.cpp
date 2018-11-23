@@ -28,7 +28,7 @@ int main()
 {
 	/*	템플릿(Template)의 특수화*/
 
-	//cout << Max<int>(11, 15) << endl; // 가능(이런 형태가 더 올바름)
+	//cout << Max<int>(11, 15) << endl;// 가능(이런 형태가 더 올바름)
 	cout << Max(11, 15) << endl;
 	//cout << Max<char>('T','Q') << endl; // 가능(이런 형태가 더 올바름)
 	cout << Max('T','Q') << endl;

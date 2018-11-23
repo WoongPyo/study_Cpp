@@ -3,67 +3,45 @@
 
 using namespace std;
 
-/* 템플릿(Template) */
-/*
-int Add(int num1, int num2)
+/* 템플릿(Template)의 특수화 */
+template <class T>
+T Max(T a, T b)
 {
-	return num1 + num2;
+	return a > b ? a : b;
 }
 
-	기능: 덧셈
-	대상 자료형 : int형 데이터
-
-template <typename T> 또는 template <class T> <-- 무조건 함수 앞에 있어야 함.
-T Add(T num1, T num2)
+template<> // template<>인 경우 형을 지정하지 않아. 특수화 하는 것임. 
+char *Max(char *a, char *b)
 {
-	return num1 + num2;
-}
-*/
-template <class T1, class T2>
-void ShowData(double num)
-{
-	cout << (T1)num << ", " << (T2)num << endl;
+	cout << "char *Max(char *a, char *b)" << endl;
+	return strlen(a) > strlen(b) ? a : b;
 }
 
-template <typename T>
-T Add(T num1, T num2)
+template<>
+const char *Max(const char *a, const char *b)
 {
-	cout << "T Add(T num1, T num2)" << endl;
-	return num1 + num2;
+	cout << a << endl;
+	cout << b << endl;
+	cout << "const char *Max(const char *a, const char *b)" << endl;
+	return strcmp(a, b) > 0 ? a : b;
 }
-
-int Add(int num1, int num2)
-{
-	cout << "int Add(int num1, int num2)" << endl;
-	return num1 + num2;
-}
-
-//istream str;
 
 int main()
 {
-	/*
-	템플릿(Template)
-	- 뜻 : 형판 -> 모형자.
-	- 함수 템플릿, 클래스 템플릿
-	  다양한 자료형의 함수, 클래스를 만드는 도구.
-	*/
-	//<int> : T를 int로 해서 만들어진 함수를 호출.
-	//		-> 템플릿 함수 : 템플릿을 기반으로 컴파일러가 만들어 내는 유형의 함수.
-	cout << Add(15, 20) << endl; //int형 형태의 함수가 출력됨.
+	/*	템플릿(Template)의 특수화*/
 
-	cout << Add<int>(15, 20) << endl; 
-	/*
-	위의 구문을 만나면...
-		int Add(int num1, int num2)
-		{
-			return num1 + num2;
-		}
-	*/
-	cout << Add<double>(2.9, 5.5) << endl;
-	ShowData<char, int>(65);
+	cout << Max(11, 15) << endl;
+	cout << Max('T','Q') << endl;
+	cout << Max(3.5, 10.5) << endl;
+
+	// 기준이 애매한 경우.
+	// const char *의 경우
+	cout << Max("Simple", "Best") << endl;
+	// char *의 경우
+	char str1[] = "Simple";
+	char str2[] = "Best";
+	cout << Max(str1, str2) << endl;
 
 
-	cout << "mfi" << endl;
 	return 0;
 }

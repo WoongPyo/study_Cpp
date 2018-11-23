@@ -48,19 +48,28 @@ String::~String()
 }
 
 //operator=
-String &String::operator=(const String &s);
+String &String::operator=(const String &s)
 {
-	String buf;
-	buf.len = s.len;
-	strcpy(buf.str, s.str);
-	return buf;
+
 }
 
 //operator+
+String String::operator+(const String &s)
+{
+
+}
 
 //operator+=
+String &String::operator+=(const String &s)
+{
+
+}
 
 //operator==
+String &String::operator==(const String &s)
+{
+
+}
 
 int main()
 {

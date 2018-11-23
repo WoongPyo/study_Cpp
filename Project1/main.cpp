@@ -1,36 +1,30 @@
 #include <iostream>
-#include <cstring>
+#include <string>
 
 using namespace std;
 
-void Divide(int num1, int num2)
-{
-	try
-	{
-		if (num2 == 0)
-			throw 0;
-		cout << "몫 : " << num1 / num2 << endl;
-		cout << "나머지 : " << num1 % num2 << endl;
-	}
-	catch (int expn)
-	{
-		cout << "first catch" << endl;
-		throw;
-	}
-}
-
 int main()
 {
-	try
-	{
-		Divide(9, 2);
-		Divide(4, 0);
-	}
-	catch (int expn)
-	{
-		cout << "second catch" << endl;
-		cout << "Error Code : " << expn << endl;
-	}
+	string str1 = "I like string class. ";
+	string str2 = "Me too.";
+	string str3 = str1 + str2;
+
+	cout << str1 << endl;
+	cout << str2 << endl;
+	cout << str3 << endl;
+
+	str1 += str2;
+
+	if (str1 == str3)
+		cout << "동일문자열" << endl;
+	else
+		cout << "다른문자열" << endl;
+
+	string str4;
+
+	cout << "문자열 입력 : ";
+	cin >> str4;
+	cout << "입력한 문자열 : " << str4 << endl;
 
 	return 0;
 }

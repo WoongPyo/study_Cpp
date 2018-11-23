@@ -5,6 +5,7 @@ using namespace std;
 
 int main()
 {
+	/* C++ วฅมุ string class*/
 	string str1 = "I like string class. ";
 	string str2 = "Me too.";
 	string str3 = str1 + str2;

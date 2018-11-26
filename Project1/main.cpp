@@ -51,4 +51,4 @@ int main()
 	return 0;
 }
 
-istream sdf;
+//istream sdf;

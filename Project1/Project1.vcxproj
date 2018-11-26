@@ -125,6 +125,7 @@
     <ClCompile Include="HighCreditAccount.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="NormalAccount.cpp" />
+    <ClCompile Include="String.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Account.h" />
@@ -133,6 +134,7 @@
     <ClInclude Include="HighCreditAccount.h" />
     <ClInclude Include="main.h" />
     <ClInclude Include="NormalAccount.h" />
+    <ClInclude Include="String.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="ClassDiagram.cd" />

@@ -1,16 +1,13 @@
 #include "Account.h"
 
-Account::Account(int ID, int money, char* name) : accID(ID), balance(money)
+Account::Account(int ID, int money, String name) : accID(ID), balance(money)
 {
-	int len = strlen(name) + 1;
-	this->cusName = new char[len];
-	strcpy(this->cusName, name);
+	cusName = name;
 }
 
 
 Account::~Account()
 {
-	delete[] cusName;
 }
 
 int Account::GetID()

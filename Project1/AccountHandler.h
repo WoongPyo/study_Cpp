@@ -2,11 +2,12 @@
 #include "main.h"
 #include "Account.h"
 #include "BoundCheckPointArray.h"
+#include "BoundCheckPointArray.cpp"
 
 class AccountHandler
 {
 private:
-	BoundCheckPointArray *arrays;
+	BoundCheckPointArray<Account *> *arrays;
 
 	// 동일한 객체(사번 111이라는 객체)가 시스템 내에서 존재하지 않도록 하기 위해서.
 	AccountHandler &operator=(const AccountHandler &buf) {}

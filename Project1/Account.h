@@ -1,14 +1,15 @@
 #pragma once
 #include "main.h"
+#include "String.h"
 
 class Account
 {
 private:
 	int accID; 											//∞Ë¡¬π¯»£
 	int balance;    									//¿‹æ◊
-	char *cusName; 										//∞Ì∞¥∏Ì
+	String cusName; 									//∞Ì∞¥∏Ì
 public:
-	Account(int ID, int money, char* name);
+	Account(int ID, int money, String name);
 	~Account();
 	int GetID();										//	account¿« ID∏¶ »Æ¿Œ
 	virtual void InputMoney(int inputMoney);					//	µ∑¿ª ¿‘±›

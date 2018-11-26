@@ -1,38 +1,44 @@
 #include "BoundCheckPointArray.h"
-
-BoundCheckPointArray::BoundCheckPointArray(int maxNum) : accNum(0)
+template <class T>
+BoundCheckPointArray<T>::BoundCheckPointArray(int maxNum) : accNum(0)
 {
-	accArr = new Account*[maxNum];
+	accArr = new T[maxNum];
 }
 
-BoundCheckPointArray::~BoundCheckPointArray()
+template <class T>
+BoundCheckPointArray<T>::~BoundCheckPointArray()
 {
 	delete[] accArr;
 }
 
-Account *BoundCheckPointArray::SelectAccount(int accNum)
+template <class T>
+T BoundCheckPointArray<T>::SelectAccount(int accNum)
 {
 	return accArr[accNum];
 }
 
-void BoundCheckPointArray::AddAccount(Account *account)
+template <class T>
+void BoundCheckPointArray<T>::AddAccount(T account)
 {
 	accArr[accNum++] = account;
 }
 
-void BoundCheckPointArray::ShowAccountsInfo() const
+template <class T>
+void BoundCheckPointArray<T>::ShowAccountsInfo() const
 {
 	for (int i = 0; i < accNum; i++)		accArr[i]->PrintAccount();
 }
 
-int BoundCheckPointArray::CheckingID(int ID)
+template <class T>
+int BoundCheckPointArray<T>::CheckingID(int ID)
 {
 	for (int i = 0; i < accNum; i++)
 		if (ID == accArr[i]->GetID())			return i;
 	return NO_MATCH;
 }
 
-int BoundCheckPointArray::GetAccountNumber(void)
+template <class T>
+int BoundCheckPointArray<T>::GetAccountNumber(void)
 {
 	return accNum;
 }

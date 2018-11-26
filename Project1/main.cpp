@@ -7,7 +7,7 @@
 int main()
 {
 	int iDbuf;
-	char *namebuf = new char[20];
+	String namebuf;
 	int moneybuf;
 	int interestbuf;
 	int creditbuf;
@@ -153,7 +153,6 @@ int main()
 
 		if (finishFlag)
 		{
-			delete[] namebuf;
 			break;
 		}
 	}

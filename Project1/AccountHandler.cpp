@@ -2,7 +2,7 @@
 
 AccountHandler::AccountHandler(int maxNum)
 {
-	arrays = new BoundCheckPointArray(maxNum);
+	arrays = new BoundCheckPointArray<Account *>(maxNum);
 }
 
 int AccountHandler::GetInt(const char *inputStr)
